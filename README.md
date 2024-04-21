@@ -1,82 +1,56 @@
-# ga3-grp10-BE
+**MyTern Recruitment Website**
 
-GA Project 3 Group 10
+*Overview*
+Mytern will be a recruitment website, with the following initial functionality:
 
-Members: Benjamin Foo, Kristian Nielsen, Patrick Kittle
+*Job Seekers/Talent*
+- Account Signup
+- Signin
+- Skills profile setup
+- Resume upload (stretch goal to read the resume and build the profile automatically)
+- Account management
+- Job search
+- Apply to jobs
+- View the application statuses
 
-**Overview:**
-We have build a localised model of Kickstarter. Our high level functionality is:
+*Recruiters/Businesses*
+- Signup for a company account
+- Add company users on the same domain
+- Manage the company users
+- Create job postings and post
+- Track the status of roles
+- Sign up for membership to post additional jobs past the free tier
 
-**User Interaction:**
-Home page showcasing the live projects in cards.
-Signup for an account
-Signin to your account
-Manage your account/ugrade to a contributor
-Project details page- the images and text about trhe project.
-Ask questions about the prject to the owner
-Full purchase workflow - allow users to make payment to the project
+*Admin Portal (Site owner)*
+- view all users - seekers and business accounts
+- view all roles
+- Assign API keys for businesses to integrate to other platforms (stretch)
 
-**Contributor Interaction**
-Sigmup for an account
-Manage account 
-Member homw page listing all the projects 
-Add projects page
-Manage project page - add images, update text, answer questions
+**Stack/Technologies**
+Front-end:
+- Javascript/React Framework
+- Material UI Components
+- Tailwind CSS and Components
 
+Back-end-1:
+- Javascript/Node.js/Express
 
-**Admin Interactions**
-View all active users
-Delete users
-Shows graphs for signups and activity
-TODO: Add project funding details/revenue
+Database:
+- Google CloudSQL running on Postgres15
+- Google Firestore/NoSQL for job objects (TBD)
 
-# Draft begins here
+Other External Dependencies:
+- Google OAuth Services for login
+- Google Document AI - OCR 
+- Google Vertex - Logic to move uploaded resume text into formatted objects for database storage
+- Google Cloud Storage - storing resumes, images and any other blob storage requirements
 
-# SingStarter 
-
-A Singapore-based crowd funding app where users can pledge their money to help fund your next big idea
-
-## Screenshots
-Screenshots go here
-
-## Technologies Used
-- React
-- Tailwind
-- Material UI
-- express
-- MongoDB w/ mongoose
-
-## .env variables
-```
-_Frontend .env:_
-TE_SERVER=http://localhost:7001
-VITE_FE_PORT=5173
-#GCP Storage Info
-VITE_GCP_ASSETS_URI=https://storage.googleapis.com/ga-project-3-assets/
-#Stripe Publishable Key
-VITE_STRIPE_PUB_KEY=
-
-_Backend .env:_
-PORT=7001
-FE_PORT=5173
-MONGO_URI=mongodb+srv://user:password@cluster0.for7dn9.mongodb.net/development
-ACCESS_SECRET=
-REFRESH_SECRET=
-STRIPE_TEST=
-PROJECT_ID=winter-jet-212808
-BUCKET_NAME=ga-project-3-assets
-GOOGLE_APPLICATION_CREDENTIALS=winter-jet-212808-fc4a3206d0d7.json
-IMAGE_BASE_URI=https://storage.googleapis.com/ga-project-3-assets/
-
-_Google_JSON_Creds_file_name
-winter-jet-212808-fc4a3206d0d7.json stored in root of backend
-```
 
 ## Getting Started
 Getting started instructions go here
 
 ## Icebox Items
-Icebox items go here
+Icebox itemsare in the Jira project here: https://patrickkittle.atlassian.net/jira/software/projects/GP4/boards/4
 
 ## References
 - [API Dictionary](https://docs.google.com/spreadsheets/d/1wfkbw6tjOfWev1ZcPoxbaVDZ3InfBr3GgQTUlA75zVo/edit#gid=833770197)   
