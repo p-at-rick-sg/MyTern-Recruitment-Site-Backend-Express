@@ -127,5 +127,5 @@ dist
 .pnp.*
 
 # Google
-.json
+ga-project-4-langchain.json
 .pem
