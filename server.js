@@ -27,10 +27,7 @@ const limiter = rateLimit({
 });
 //Initialise main app
 const app = express();
-const privatekey = fs.readFileSync('key.pem', 'utf8');
-const certificate = fs.readFileSync('cert.pem', 'utf8');
-const credentials = {key: privatekey, cert: certificate};
-
+app.use(cookieParser());
 app.use(
   cors({
     origin: true,
@@ -42,8 +39,7 @@ app.use(helmet());
 app.use(limiter);
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
-const httpsServer = https.createServer(credentials, app);
-app.use(cookieParser());
+
 //use the db connection to check connection before starting the listener
 const db = new PostgresConnection(); // Create a single instance (singleton)
 
@@ -63,7 +59,7 @@ const db = new PostgresConnection(); // Create a single instance (singleton)
 //Add the main routers and links to sub-routers here
 app.use('/auth', authRouter);
 app.use('/api', apiRouter);
-app.use('/api/talent', talentRouter);
+app.use('/api/talent', authTalent, talentRouter);
 app.use('/api/recruiter', recruiterRouter);
 app.use('/api', (req, res) => res.status(404).json('No route for this path'));
 

@@ -66,18 +66,14 @@ const getGoogleUserData = async (req, res) => {
       //logic - set timeout to 30 minutes - each time a protected endpoint is called before the expiry, new access is generated - clever huh!!?? Otherwise the session times out
 
       //database code goes here.
-
-      //response with access only in a secure cookie header then return a redirect to maybe the success page to run the logic to allow the new secure renders
-      //   console.log(tokens.access);
-
+      console.log(tokens.access);
       res
-        .cookie('localToken', tokens.access, {
-          httpOnly: false,
+        .cookie('accessToken', tokens.access, {
+          httpOnly: true,
           secure: false,
           maxAge: 1000 * 60 * 30,
         })
         .redirect('http://localhost:5173/oauth-success');
-      //   res.send('sent cookie');
     } else {
       return res.status(400).json({status: 'error', msg: 'google auth failed (2)'});
     }
