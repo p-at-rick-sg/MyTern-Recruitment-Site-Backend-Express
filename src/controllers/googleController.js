@@ -24,7 +24,6 @@ const postGoogleAuthURL = async (req, res) => {
 //Request the user info from Google
 const getGoogleUserData = async (req, res) => {
   const code = req.query.code;
-  console.log('Google Code from initial Query in url query: ', code);
   try {
     const redirectUrl = process.env.AUTH_REDIRECT_URL;
     const oAuth2Client = new OAuth2Client(
@@ -40,7 +39,7 @@ const getGoogleUserData = async (req, res) => {
       `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${user.access_token}`
     );
     const data = await response2.json();
-    console.log(data);
+    // console.log(data);
     //if the email is not verified we drop the auth and reject
     if (data.email_verified !== true) {
       return res.status(400).json({status: 'error', msg: 'email not verified by google (1)'});
@@ -52,31 +51,38 @@ const getGoogleUserData = async (req, res) => {
     `;
     const params = [data.email];
     const checkExisting = await client.query(queryString, params);
-    console.log(checkExisting);
     if (checkExisting.rowCount !== 0) {
       console.info('email found in database');
       const auth = await userLookup(data.email);
       const claims = {
         email: data.email,
         type: auth.rows[0].name, //how do we get this from here
-        role: 'temp role for now', //TODO: add role here for coprp/recr type
+        role: 'standard', //TODO: add role here for the corp/recr type only as user always = user/standard
         id: auth.rows[0].user_id,
       };
       const tokens = await setupJwt(claims);
-      console.log(tokens.access);
+
+      // do the databse stuff to store the tokens in the jwt_tokens table (I will only be storing access - refresh will be voided)
+      //logic - set timeout to 30 minutes - each time a protected endpoint is called before the expiry, new access is generated - clever huh!!?? Otherwise the session times out
+
+      //database code goes here.
+
       //response with access only in a secure cookie header then return a redirect to maybe the success page to run the logic to allow the new secure renders
+      //   console.log(tokens.access);
+
       res
-        .cookie('accessToken', tokens.access, {
-          httpOnly: true, // Mark the cookie as HttpOnly
-          secure: true, // Add secure flag if using HTTPS (recommended)
-          maxAge: 1000 * 60 * 60, // Set cookie expiration (matches token expiry - change back to 30 later )
+        .cookie('localToken', tokens.access, {
+          httpOnly: false,
+          secure: false,
+          maxAge: 1000 * 60 * 30,
         })
         .redirect('http://localhost:5173/oauth-success');
+      //   res.send('sent cookie');
     } else {
       return res.status(400).json({status: 'error', msg: 'google auth failed (2)'});
     }
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(400).json({status: 'error', msg: 'google auth failed (3)'});
   }
 };

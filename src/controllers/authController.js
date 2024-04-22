@@ -89,16 +89,17 @@ const signin = async (req, res) => {
     const email = req.body.email;
     const client = await db.pool.connect(); // Use the connection pool
     console.log(email);
-    const queryString = `
-    SELECT users.id, users.password_hash, user_types.name
-    FROM users
-    INNER JOIN user_type_link ON users.id =user_type_link.user_id
-    INNER JOIN user_types ON user_type_link.type_id = user_types.id
-    WHERE email = $1
-    `;
-    const params = [email];
-    const auth = await client.query(queryString, params);
 
+    // const queryString = `
+    // SELECT users.id, users.password_hash, user_types.name
+    // FROM users
+    // INNER JOIN user_type_link ON users.id =user_type_link.user_id
+    // INNER JOIN user_types ON user_type_link.type_id = user_types.id
+    // WHERE email = $1
+    // `;
+    // const params = [email];
+    // const auth = await client.query(queryString, params);
+    const auth = await userLookup(email);
     if (auth.rowCount === 0) {
       return res.status(400).json({
         status: 'error',
@@ -121,8 +122,14 @@ const signin = async (req, res) => {
     };
 
     const tokens = await setupJwt(claims);
-
-    return res.status(200).json(tokens);
+    //testing the cookie setting from standard page with no redirect
+    console.log('setting cookie');
+    res.cookie('accessToken', tokens.access, {
+      httpOnly: true, // Mark the cookie as HttpOnly so the client cannot read it direclty
+      secure: true, // Add secure flag if using HTTPS (recommended)
+      maxAge: 1000 * 60 * 30, // Set cookie expiration (matches token expiry - change back to 30 later )
+    });
+    // return res.status(200).json(tokens);
   } catch (err) {
     console.error('failed login after password check');
     return res.status(400).json({error: err, msg: 'Other failed login error'});

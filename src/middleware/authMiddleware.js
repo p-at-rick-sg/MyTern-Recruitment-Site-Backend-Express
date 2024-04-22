@@ -1,21 +1,17 @@
 const jwt = require('jsonwebtoken');
 //To extract cookies from the cookie headers
-const cookieParser = require('cookie-parser');
-
-const cookieExtractor = cookieParser();
 
 const authTalent = (req, res, next) => {
   const accessToken = req.cookies.accessToken;
   console.log('Cookie Access Token is: ', accessToken);
-  if (!('authorization' in req.headers)) {
+  if (!accessToken) {
     return res.status(400).json({
       status: 'error',
       msg: 'No token found',
     });
   }
 
-  const token = req.headers['authorization'].replace('Bearer ', '');
-  if (token) {
+  if (accessToken) {
     try {
       const decoded = jwt.verify(token, process.env.ACCESS_SECRET); //decode the token
       req.decoded = decoded; //update the req object with the decoded value
@@ -68,4 +64,4 @@ const authAdmin = (req, res, next) => {
   }
 };
 
-module.exports = {cookieExtractor, authTalent, authContributor, authAdmin};
+module.exports = {authTalent, authContributor, authAdmin};

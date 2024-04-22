@@ -2,7 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
-const {cookieExtractor, authTalent} = require('./src/middleware/authMiddleware');
+const {authTalent} = require('./src/middleware/authMiddleware');
+const cookieParser = require('cookie-parser');
 //Security Stuff
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
@@ -32,7 +33,7 @@ const credentials = {key: privatekey, cert: certificate};
 
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: true,
     methods: 'GET,POST,PUT,DELETE',
     credentials: true,
   })
@@ -42,7 +43,7 @@ app.use(limiter);
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 const httpsServer = https.createServer(credentials, app);
-app.use(cookieExtractor);
+app.use(cookieParser());
 //use the db connection to check connection before starting the listener
 const db = new PostgresConnection(); // Create a single instance (singleton)
 
@@ -50,23 +51,19 @@ const db = new PostgresConnection(); // Create a single instance (singleton)
   try {
     const client = await db.pool.connect(); // Use the connection pool
     console.log('Postgres DB Connected Successfully!');
-    httpsServer.listen(PORT, () => {
+    app.listen(PORT, () => {
       console.log('Listening on Port TCP: 7001');
     });
   } catch (err) {
     console.error('Postgres DB Connection Failed: ', err);
     process.exit(1);
-  } finally {
-    // Close the connection pool when the application exits
-    // await db.pool.end();
   }
 })();
 
 //Add the main routers and links to sub-routers here
-// app.use('/auth');
 app.use('/auth', authRouter);
 app.use('/api', apiRouter);
-app.use('/api/talent', cookieExtractor, talentRouter);
+app.use('/api/talent', talentRouter);
 app.use('/api/recruiter', recruiterRouter);
 app.use('/api', (req, res) => res.status(404).json('No route for this path'));
 
