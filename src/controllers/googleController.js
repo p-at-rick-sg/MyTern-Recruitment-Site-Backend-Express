@@ -62,15 +62,16 @@ const getGoogleUserData = async (req, res) => {
         role: 'temp role for now', //TODO: add role here for coprp/recr type
         id: auth.rows[0].user_id,
       };
-      const tokens = setupJwt(claims);
-      //response with access only in a secure cookie header
-      res.cookie('accessToken', accessToken, {
-        httpOnly: true, // Mark the cookie as HttpOnly
-        secure: true, // Add secure flag if using HTTPS (recommended)
-        maxAge: 1000 * 60 * 30, // Set cookie expiration (matches token expiry)
-      });
-      //return the response to the client
-      res.json({message: 'Successfully logged in'}).redirect('http://localhost:5173/newnav');
+      const tokens = await setupJwt(claims);
+      console.log(tokens.access);
+      //response with access only in a secure cookie header then return a redirect to maybe the success page to run the logic to allow the new secure renders
+      res
+        .cookie('accessToken', tokens.access, {
+          httpOnly: true, // Mark the cookie as HttpOnly
+          secure: true, // Add secure flag if using HTTPS (recommended)
+          maxAge: 1000 * 60 * 60, // Set cookie expiration (matches token expiry - change back to 30 later )
+        })
+        .redirect('http://localhost:5173/oauth-success');
     } else {
       return res.status(400).json({status: 'error', msg: 'google auth failed (2)'});
     }

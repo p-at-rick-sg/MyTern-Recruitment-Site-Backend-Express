@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const {simpleGet} = require('../controllers/talentController');
 
 //GET
-// /talent/
+router.get('', simpleGet);
 //POST
 
 //PATCH

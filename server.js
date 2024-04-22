@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
-
+const {cookieExtractor, authTalent} = require('./src/middleware/authMiddleware');
 //Security Stuff
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
@@ -39,10 +39,10 @@ app.use(
 ); //this opens to all domains
 app.use(helmet());
 app.use(limiter);
-//Setup app to be able to consume paramters from URLs
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 const httpsServer = https.createServer(credentials, app);
+app.use(cookieExtractor);
 //use the db connection to check connection before starting the listener
 const db = new PostgresConnection(); // Create a single instance (singleton)
 
@@ -66,8 +66,8 @@ const db = new PostgresConnection(); // Create a single instance (singleton)
 // app.use('/auth');
 app.use('/auth', authRouter);
 app.use('/api', apiRouter);
-app.use('/api', talentRouter);
-app.use('/api', recruiterRouter);
+app.use('/api/talent', cookieExtractor, talentRouter);
+app.use('/api/recruiter', recruiterRouter);
 app.use('/api', (req, res) => res.status(404).json('No route for this path'));
 
 module.exports = {db};
