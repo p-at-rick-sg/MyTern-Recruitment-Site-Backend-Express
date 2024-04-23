@@ -3,11 +3,12 @@ const router = express.Router();
 
 const auth = require('../middleware/authMiddleware');
 
-const {signup, signin, refresh} = require('../controllers/authController');
+const {signup, signin, refresh, corpSignup} = require('../controllers/authController');
 const {postGoogleAuthURL, getGoogleUserData} = require('../controllers/googleController');
 
 //Signup Endpoint
 router.put('/signup', signup);
+router.put('/company-signup', corpSignup);
 
 //Signin Endpoint
 router.post('/signin', signin);

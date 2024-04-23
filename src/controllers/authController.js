@@ -5,28 +5,44 @@ const {v4: uuidv4} = require('uuid');
 const {PostgresConnection} = require('../models/db');
 const db = new PostgresConnection();
 
-const signup = async (req, res) => {
-  const email = req.body.email;
+const checkExistingEmail = async email => {
   try {
     const client = await db.pool.connect(); // Use the connection pool
     //Find the user by email in the db as this will be a duplicate and cannot register again
-    const checkExisting = await client.query(`SELECT id FROM users WHERE email = '${email}'`); //remove string concatenation later
+    const checkExisting = await client.query(`SELECT id FROM users WHERE email = '${email}'`);
     if (checkExisting.rowCount !== 0) {
-      return res.status(400).json({
-        status: 'error',
-        msg: 'duplicate username/user already registered',
-      });
+      return true;
+    } else {
+      return false;
     }
-    //Create the local password hash
-    const passwordHash = await bcrypt.hash(req.body.password, 12);
+  } catch (err) {
+    console.error('failed to lookup user in db with error: ', err);
+    return res.status(400).json({status: 'error', msg: 'error checking email'});
+  }
+};
 
-    //cleanse the input data in middlewarwe later
+const signup = async (req, res) => {
+  const email = req.body.email;
+  const existing = await checkExistingEmail(email);
+  if (existing) {
+    return res.status(400).json({
+      status: 'error',
+      msg: 'duplicate email',
+    });
+  }
+
+  try {
+    //Create the password hash
+    const passwordHash = await bcrypt.hash(req.body.password, 12);
+    //TODO: cleanse the input data in middlewarwe later
     firstName = req.body.firstName;
     lastName = req.body.lastName;
+    const client = await db.pool.connect();
     const insertUserResult = await client.query(
       'INSERT INTO users (email, password_hash, first_name, last_name) VALUES ($1, $2, $3, $4) RETURNING id',
       [email, passwordHash, firstName, lastName]
     );
+    console.log(insertUserResult);
     if (insertUserResult.rows[0]) {
       console.log('we have the user ID OK');
       const userId = insertUserResult.rows[0].id;
@@ -47,16 +63,11 @@ const signup = async (req, res) => {
         // go ahead and add the new address and get the id
         const address1 = req.body.address1;
         const city = req.body.city;
-        const country = req.body.country;
+        const country = req.body.country.name;
+        countryId = req.body.country.id;
         const address2 = {};
         if ('address2' in req.body) address2.name = req.body.address2;
-
-        //get country ID
-        const countryResult = await client.query('SELECT id FROM countries WHERE name = $1', [
-          country,
-        ]);
-        const countryId = countryResult.rows[0].id;
-        console.log('country id: ', countryId);
+        console.log('country deets: ', countryId, country);
         const insertAddressResult = await client.query(
           'INSERT INTO addresses (address1, address2, city, postcode, country_id) VALUES ($1, $2, $3, $4, $5) RETURNING id',
           [address1, 'test add2', city, postcode, countryId]
@@ -71,16 +82,115 @@ const signup = async (req, res) => {
         // get the existing id but we won't add this for now as we don't ahve any addresses it won;t cause an issue yet
         console.log('address already existed - add some logic to handle now!');
       }
-
       //add optional elements to the object - NOT USING YET and objects won't work here
-      if ('telephone' in req.body) newUser.telephone = req.body.telephone;
-      if ('role' in req.body) newUser.role = req.body.role;
-
+      // if ('telephone' in req.body) newUser.telephone = req.body.telephone;
+      // if ('role' in req.body) newUser.role = req.body.role;
       res.status(200).json({status: 'ok', msg: 'user registered successfully'});
     }
   } catch (err) {
     console.log(err.message);
     res.status(400).json({status: 'error', msg: 'failed registration'});
+  }
+};
+
+const checkExistingDomain = async params => {
+  try {
+    const client = await db.pool.connect();
+    const queryString = `
+    SELECT id 
+    FROM companies
+    WHERE primary_domain = $1
+    `;
+    const checkExisting = await client.query(queryString, params);
+    if (checkExisting.rowCount === 0) {
+      return false;
+    } else return true;
+  } catch (err) {
+    console.error('failed to validate domain');
+  }
+};
+
+const corpSignup = async (req, res) => {
+  const domain = req.body.primaryDomain;
+  // to validate the domain is unique/stop multiple signups of same company
+  const existing = await checkExistingDomain([domain]);
+  console.info('existing domain result: ', existing);
+  if (existing) {
+    return res.status(400).json({
+      status: 'error',
+      msg: 'domain already registered',
+    });
+  } else {
+    const client = await db.pool.connect();
+    const passwordHash = await bcrypt.hash(req.body.password, 12);
+    //START THE SQL MASSACRE
+    const insertQuery = `
+    INSERT INTO users (first_name, last_name, email, password_hash)
+    VALUES ($1, $2, $3, $4)
+    RETURNING id;
+  `;
+    const params = [req.body.firstName, req.body.lastName, req.body.email, passwordHash];
+
+    const res = await client.query(insertQuery, params);
+    const newUserId = res.rows[0].id;
+    console.info('new user id: ', newUserId);
+    //quickly insert the user type link entry
+    await client.query('INSERT INTO user_type_link (user_id, type_id) VALUES ($1, $2)', [
+      newUserId,
+      2,
+    ]); //type 2 for corporate user
+    const insertQuery2 = `INSERT INTO companies (name, primary_domain, total_employees, root_user_id) VALUES ($1, $2, $3, $4) RETURNING id;`;
+    const params2 = [
+      req.body.companyName,
+      req.body.primaryDomain,
+      req.body.totalEmployees,
+      newUserId,
+    ];
+    console.log(insertQuery2, params2);
+    const res2 = await client.query(insertQuery2, params2);
+    console.log('res2 neat', res2);
+    const newCompanyId = res2.rows[0].id;
+    console.info('new company id: ', newCompanyId);
+    const countryResult = await client.query(
+      `SELECT id from countries
+        WHERE name = $1;`,
+      [req.body.country]
+    );
+    const countryId = countryResult.rows[0].id;
+    const insertQuery3 = `
+        INSERT INTO addresses (address1, address2, city, postcode, country_id) 
+        VALUES ($1, $2, $3, $4, $5) RETURNING id;
+        `;
+    const params3 = [
+      req.body.address1,
+      req.body.address2 || '',
+      req.body.city,
+      req.body.postcode,
+      countryId,
+    ]; //took out the address logic just to get it working
+    const res3 = await client.query(insertQuery3, params3);
+    const newAddressId = res3.rows[0].id;
+    console.log('address id: ', newAddressId, 'comp id', newCompanyId, 'userid', newUserId);
+
+    const insertQuery4 = `INSERT INTO company_offices (company_id, primary_contact_id, address_id) VALUES ($1, $2, $3) RETURNING id;`;
+    const params4 = [newCompanyId, newUserId, newAddressId];
+    const res4 = await client.query(insertQuery4, params4);
+    newOfficeId = res4.rows[0].id;
+    //lookup secotr id
+    const sectorResult = await client.query('SELECT id FROM company_sectors WHERE sector = $1;', [
+      req.body.companySector,
+    ]);
+    const sectorId = sectorResult.rows[0].id;
+    const insertQuery5 = `INSERT INTO company_sector_link (company_id, sector_id) VALUES ($1, $2);`;
+    const params5 = [newCompanyId, sectorId];
+    const res5 = await client.query(insertQuery5, params5);
+    //finally add the company_user_link info (admin is ID 1)
+    const insertQuery6 = `INSERT INTO company_users_link (user_id, company_id, office_id, role_id, position) VALUES ($1, $2, $3, $4, $5) RETURNING id;`;
+    const params6 = [newUserId, newCompanyId, newOfficeId, 1, req.body.position]; //admin is role id 1
+    const finalRes = await client.query(insertQuery6, params6);
+    if (finalRes.rows[0].id !== null) {
+      console.info('completed new company and admin user setup');
+    }
   }
 };
 
@@ -117,7 +227,7 @@ const signin = async (req, res) => {
     const claims = {
       email: email,
       type: auth.rows[0].name,
-      role: 'temp role for now', //TODO: add role here for coprp/recr type
+      role: 'temp role for now', //TODO: add role here for comp/recr type
       id: auth.rows[0].user_id,
     };
 
@@ -188,4 +298,4 @@ const refresh = async (req, res) => {
   }
 };
 
-module.exports = {signup, signin, refresh, setupJwt, userLookup};
+module.exports = {signup, signin, refresh, setupJwt, userLookup, corpSignup};

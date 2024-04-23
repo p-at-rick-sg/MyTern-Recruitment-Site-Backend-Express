@@ -4,5 +4,6 @@ const {getSectors, getPostcodes, getCountries} = require('../controllers/apiCont
 
 //GET ONLY HERE AS NO AUTHENTICATION REQUIRED
 router.get('/sectors', getSectors);
+router.get('/countries', getCountries);
 
 module.exports = router;
