@@ -59,7 +59,7 @@ const db = new PostgresConnection(); // Create a single instance (singleton)
 //Add the main routers and links to sub-routers here
 app.use('/auth', authRouter);
 app.use('/api', apiRouter);
-app.use('/api/talent', authTalent, talentRouter);
+app.use('/api/talent', talentRouter);
 app.use('/api/recruiter', recruiterRouter);
 app.use('/api', (req, res) => res.status(404).json('No route for this path'));
 

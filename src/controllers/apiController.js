@@ -6,19 +6,14 @@ const getSectors = async (req, res) => {
   console.log('get sectors running');
   try {
     const queryString = `
-        SELECT (sector)
+        SELECT sector, id
         FROM company_sectors
         ORDER BY sector
         `;
     const sectorsResult = await client.query(queryString);
-    const returnArr = [];
-    for (const item of sectorsResult.rows) {
-      returnArr.push(item.sector);
-    }
-    const returnObj = {};
-    returnObj.data = returnArr;
-    console.log(returnObj.data);
-    return res.status(200).json(returnObj.data);
+
+    console.log('returning: ', sectorsResult.rows);
+    return res.status(200).json(sectorsResult.rows);
   } catch (err) {
     return res.status(400).json({status: 'error', msg: 'failed to retrieve data'});
   }

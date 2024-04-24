@@ -2,6 +2,10 @@ require('dotenv').config();
 const {Storage} = require('@google-cloud/storage');
 const fs = require('fs').promises;
 const path = require('path');
+const bcrypt = require('bcrypt');
+const {PostgresConnection} = require('../models/db');
+const db = new PostgresConnection();
+const {checkExistingEmail} = require('../controllers/authController');
 
 const uploadToGCP = async (file, fileOutputName) => {
   try {
@@ -59,6 +63,53 @@ const uploadAsset = async (req, res) => {
   }
 };
 
+function generatePassword(length) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = ' ';
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
+const inviteCompanyUser = async (req, res) => {
+  //change doma later t be looked up locally?
+  const user = req.body.user;
+  const domain = req.body.domain;
+  //check existing user and correct domain
+  const exists = await checkExistingEmail(user.email);
+  if (!exists && user.email.includes(domain)) {
+    console.info('inviting: ', user.email);
+    const password = generatePassword(8); //keep to send to the email for the user
+    const passwordHash = await bcrypt.hash(password, 12);
+    const client = await db.pool.connect(); // Use the connection pool
+    try {
+      client.query('BEGIN;');
+      const insertQuery1 = `INSERT INTO users (email, first_name, last_name, password_hash) VALUES ($1, $2, $3, $4) RETURNING id;`;
+      const params1 = [user.email, user.firstName, user.lastName, passwordHash];
+      const newUserResult = await client.query(insertQuery1, params1);
+      const newUserId = newUserResult.rows[0].id;
+      console.log(newUserId);
+      return res.status(200).json({status: 'ok', msg: `added user ID: ${newUserId}`});
+    } catch (err) {
+      console.error('failed to add users: ', err);
+      client.query('ROLLBACK;');
+      return res.status(400).json({status: 'error', msg: 'error adding users'});
+    } finally {
+      console.info('commiting & releasing client');
+      client.query('COMMIT;');
+      client.release();
+    }
+  } else {
+    //the user is not valid - we wil not invite
+    console.info('invalid user - not being invited');
+    return res.status(400).json({status: 'error', msg: 'error adding users'});
+    client.release();
+  }
+};
+
 module.exports = {
   uploadAsset,
+  inviteCompanyUser,
 };
