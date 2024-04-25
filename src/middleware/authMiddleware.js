@@ -4,21 +4,33 @@ const jwt = require('jsonwebtoken');
 const authTalent = (req, res, next) => {
   const accessToken = req.cookies.accessToken;
   console.log('Cookie Access Token is: ', accessToken);
+  console.log('Cookies:');
+  Object.keys(req.cookies).forEach(cookieName => {
+    console.log(`${cookieName}: ${req.cookies[cookieName]}`);
+  });
   if (!accessToken) {
-    return res.status(400).json({
+    return res.status(401).json({
       status: 'error',
-      msg: 'No token found (1)',
+      msg: 'No token found in cookie',
     });
   }
-  if (accessToken) {
-    try {
-      const decoded = jwt.verify(accessToken, process.env.ACCESS_SECRET); //decode the token
-      req.decoded = decoded; //update the req object with the decoded value
-      console.log('The decoded token: ', decoded);
-      next(); //pass the control to the next item
-    } catch (err) {
-      return res.status(403).json({status: 'error', msg: 'No token found (2)'});
+
+  try {
+    const decoded = jwt.verify(accessToken, process.env.ACCESS_SECRET);
+    console.log('Decoded Token: ', decoded);
+
+    if (decoded.type === 'user') {
+      req.decoded = decoded;
+      next();
+    } else {
+      throw new Error('Invalid token type');
     }
+  } catch (err) {
+    console.error('Error decoding token:', err.message);
+    return res.status(403).json({
+      status: 'error',
+      msg: 'Invalid or expired token',
+    });
   }
 };
 

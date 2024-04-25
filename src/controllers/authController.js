@@ -30,7 +30,6 @@ const signup = async (req, res) => {
       msg: 'duplicate email',
     });
   }
-
   //Create the password hash
   const passwordHash = await bcrypt.hash(req.body.password, 12);
   //TODO: cleanse the input data in middlewarwe later
@@ -64,23 +63,21 @@ const signup = async (req, res) => {
         // go ahead and add the new address and get the id
         const address1 = req.body.address1;
         const city = req.body.city;
-        const country = req.body.country.name;
         countryId = req.body.country.id;
-        const address2 = {};
-        if ('address2' in req.body) address2.name = req.body.address2;
-        console.log('country deets: ', countryId, country);
+        const address2 = '';
+        if ('address2' in req.body) address2 = req.body.address2;
         const insertAddressResult = await client.query(
           'INSERT INTO addresses (address1, address2, city, postcode, country_id) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-          [address1, 'test add2', city, postcode, countryId]
+          [address1, address2 || '', city, postcode, countryId]
         );
         console.log('address id: ', insertAddressResult.rows[0].id);
         const addressId = insertAddressResult.rows[0].id;
-        const linkUserAddressResult = await client.query(
+        await client.query(
           'INSERT INTO user_address_link (user_id, address_id, address_type) VALUES ($1, $2, $3)',
           [userId, addressId, 'primary']
         );
       } else {
-        // get the existing id but we won't add this for now as we don't ahve any addresses it won;t cause an issue yet
+        // get the existing id but we won't add this for now as we don't ahve any addresses it won't cause an issue yet
         console.log('address already existed - add some logic to handle!');
         return res.status(400).json({status: 'error', msg: 'email already exists'});
       }
@@ -179,14 +176,11 @@ const corpSignup = async (req, res) => {
       const params4 = [newCompanyId, newUserId, newAddressId];
       const res4 = await client.query(insertQuery4, params4);
       newOfficeId = res4.rows[0].id;
-      // FIX THIS N THE FE
-      // const sectorResult = await client.query('SELECT id FROM company_sectors WHERE sector = $1;', [
-      //   req.body.companySector,
-      // ]);
+
       const sectorId = req.body.companySector.id;
       const insertQuery5 = `INSERT INTO company_sector_link (company_id, sector_id) VALUES ($1, $2);`;
       const params5 = [newCompanyId, sectorId];
-      const res5 = await client.query(insertQuery5, params5);
+      await client.query(insertQuery5, params5);
       //finally add the company_user_link info (admin is ID 1)
       const insertQuery6 = `INSERT INTO company_users_link (user_id, company_id, office_id, role_id, position) VALUES ($1, $2, $3, $4, $5) RETURNING id;`;
       const params6 = [newUserId, newCompanyId, newOfficeId, 1, req.body.position]; //admin is role id 1
@@ -211,61 +205,53 @@ const corpSignup = async (req, res) => {
 };
 
 const signin = async (req, res) => {
+  console.log(req.body);
   try {
     const email = req.body.email;
-    const client = await db.pool.connect(); // Use the connection pool
-    console.log(email);
-
-    // const queryString = `
-    // SELECT users.id, users.password_hash, user_types.name
-    // FROM users
-    // INNER JOIN user_type_link ON users.id =user_type_link.user_id
-    // INNER JOIN user_types ON user_type_link.type_id = user_types.id
-    // WHERE email = $1
-    // `;
-    // const params = [email];
-    // const auth = await client.query(queryString, params);
+    const password = req.body.password;
+    console.log(email, ' : ', password);
     const auth = await userLookup(email);
+    console.log('auth in the signin func: ', auth);
     if (auth.rowCount === 0) {
       return res.status(400).json({
         status: 'error',
-        msg: 'not authorized',
+        msg: 'User not found',
       });
     }
-    //compare the password hash against stored hash
-    const result = await bcrypt.compare(req.body.password, auth.rows[0].password_hash);
-
+    // Compare the password hash against the stored hash
+    const result = await bcrypt.compare(password, auth.rows[0].password_hash);
     if (!result) {
-      console.log('incorrect password');
-      return res.status(400).json({status: 'not ok', msg: 'failed login'});
+      console.log('Incorrect password');
+      return res.status(400).json({status: 'error', msg: 'Incorrect password'});
     }
-    //if we get here login succeeded so we set up the jwt
+    // Setup JWT
     const claims = {
       email: email,
       type: auth.rows[0].name,
-      role: 'temp role for now', //TODO: add role here for comp/recr type
+      role: 'temp role for now', // TODO: add role here for comp/recr type
       id: auth.rows[0].user_id,
     };
-
     const tokens = await setupJwt(claims);
-    //testing the cookie setting from standard page with no redirect
-    console.log('setting cookie');
+    console.log('Setting cookie: ', tokens.access);
+    // Set cookie and redirect
     res.cookie('accessToken', tokens.access, {
-      httpOnly: true, // Mark the cookie as HttpOnly so the client cannot read it direclty
-      secure: true, // Add secure flag if using HTTPS (recommended)
-      maxAge: 1000 * 60 * 30, // Set cookie expiration (matches token expiry - change back to 30 later )
+      domain: 'localhost',
+      httpOnly: true,
+      secure: false, // Change to true in production if served over HTTPS
+      maxAge: 1000 * 60 * 30,
+      sameSite: 'Lax',
     });
-    // return res.status(200).json(tokens);
+    res.send({cookie: true});
   } catch (err) {
-    console.error('failed login after password check');
-    return res.status(400).json({error: err, msg: 'Other failed login error'});
+    console.error('Failed login:', err);
+    return res.status(500).json({status: 'error', msg: 'Internal server error'});
   }
 };
 
 const userLookup = async email => {
+  const client = await db.pool.connect(); // Use the connection pool
   try {
-    const client = await db.pool.connect(); // Use the connection pool
-    console.log(email);
+    console.log('user lookup func: ', email);
     const queryString = `
     SELECT users.id, users.password_hash, user_types.name
     FROM users
@@ -278,10 +264,13 @@ const userLookup = async email => {
     return auth;
   } catch (err) {
     console.error('failed user lookup');
-    return {status: 'error', message: 'failed uper lookup'};
+    return {status: 'error', message: 'failed user lookup'};
+  } finally {
+    console.info('processed login ok - closing db session');
+    client.release();
   }
 };
-//moved to separate functio as we will be reusing it for google and any other auth providers too
+
 const setupJwt = async claims => {
   const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
     expiresIn: '7d',

@@ -30,11 +30,11 @@ const app = express();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: true,
+    origin: ['http://localhost:5173', 'http://127.0.0.1:5731'],
     methods: 'GET,POST,PUT,DELETE',
     credentials: true,
   })
-); //this opens to all domains
+);
 app.use(helmet());
 app.use(limiter);
 app.use(express.json());
@@ -58,8 +58,8 @@ const db = new PostgresConnection(); // Create a single instance (singleton)
 
 //Add the main routers and links to sub-routers here
 app.use('/auth', authRouter);
-app.use('/api', apiRouter);
-app.use('/api/talent', talentRouter);
+app.use('/api', apiRouter); //general enum lookups etc - no authentication on any
+app.use('/api/talent', authTalent, talentRouter); //users router - 1 level auth only
 app.use('/api/recruiter', recruiterRouter);
 app.use('/api', (req, res) => res.status(404).json('No route for this path'));
 

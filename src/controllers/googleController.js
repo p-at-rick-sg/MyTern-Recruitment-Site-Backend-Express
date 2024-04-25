@@ -24,6 +24,7 @@ const postGoogleAuthURL = async (req, res) => {
 //Request the user info from Google
 const getGoogleUserData = async (req, res) => {
   const code = req.query.code;
+  const client = await db.pool.connect();
   try {
     const redirectUrl = process.env.AUTH_REDIRECT_URL;
     const oAuth2Client = new OAuth2Client(
@@ -45,7 +46,7 @@ const getGoogleUserData = async (req, res) => {
       return res.status(400).json({status: 'error', msg: 'email not verified by google (1)'});
     }
     //lookup internal user details BASIC
-    const client = await db.pool.connect(); // Use the connection pool
+
     const queryString = `
     SELECT id FROM users WHERE email = $1
     `;
