@@ -6,6 +6,8 @@ const auth = require('../middleware/authMiddleware');
 const {signup, signin, refresh, corpSignup} = require('../controllers/authController');
 const {postGoogleAuthURL, getGoogleUserData} = require('../controllers/googleController');
 
+//GET
+
 //Signup Endpoint
 router.put('/signup', signup);
 router.put('/company-signup', corpSignup);

@@ -6,8 +6,8 @@ const {PostgresConnection} = require('../models/db');
 const db = new PostgresConnection();
 
 const checkExistingEmail = async email => {
+  const client = await db.pool.connect(); // Use the connection pool
   try {
-    const client = await db.pool.connect(); // Use the connection pool
     //Find the user by email in the db as this will be a duplicate and cannot register again
     const checkExisting = await client.query(`SELECT id FROM users WHERE email = '${email}'`);
     if (checkExisting.rowCount !== 0) {
@@ -18,6 +18,8 @@ const checkExistingEmail = async email => {
   } catch (err) {
     console.error('failed to lookup user in db with error: ', err);
     return res.status(400).json({status: 'error', msg: 'error checking email'});
+  } finally {
+    client.release();
   }
 };
 
@@ -209,15 +211,16 @@ const signin = async (req, res) => {
   try {
     const email = req.body.email;
     const password = req.body.password;
-    console.log(email, ' : ', password);
+    // console.log(email, ' : ', password);
     const auth = await userLookup(email);
-    console.log('auth in the signin func: ', auth);
+    // console.log('auth in the signin func: ', auth);
     if (auth.rowCount === 0) {
       return res.status(400).json({
         status: 'error',
         msg: 'User not found',
       });
     }
+    console.log('auth _id: ', auth.rows[0].id);
     // Compare the password hash against the stored hash
     const result = await bcrypt.compare(password, auth.rows[0].password_hash);
     if (!result) {
@@ -229,9 +232,33 @@ const signin = async (req, res) => {
       email: email,
       type: auth.rows[0].name,
       role: 'temp role for now', // TODO: add role here for comp/recr type
-      id: auth.rows[0].user_id,
+      id: auth.rows[0].id,
     };
     const tokens = await setupJwt(claims);
+    const client = await db.pool.connect(); // Use the connection pool
+    try {
+      console.log('starting the db part ok');
+      client.query('BEGIN;');
+      //create a new user session  TODO: do we wnat to check existing or delete when access expires?
+      const sessionInsert = await client.query(
+        `INSERT INTO sessions (user_id) VALUES ($1) RETURNING id;`,
+        [auth.rows[0].id]
+      );
+      const sessionId = sessionInsert.rows[0].id;
+      console.log('session id: ', sessionId); //this is good
+      console.log('access: ', tokens.accessId);
+      const accessInsert = await client.query(
+        `INSERT INTO access_tokens (jti, session_id) VALUES ($1, $2) RETURNING id ;`,
+        [tokens.accessId, sessionId]
+      );
+      console.info('committing the session db info');
+      client.query('COMMIT;');
+    } catch {
+      client.query('ROLLBACK;');
+    } finally {
+      client.release();
+      console.info('released client');
+    }
     console.log('Setting cookie: ', tokens.access);
     // Set cookie and redirect
     res.cookie('accessToken', tokens.access, {
@@ -272,17 +299,18 @@ const userLookup = async email => {
 };
 
 const setupJwt = async claims => {
+  const accessId = uuidv4();
   const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
     expiresIn: '7d',
     //store this in the database as an access type
-    jwtid: uuidv4(),
+    jwtid: accessId,
   });
   const refresh = jwt.sign(claims, process.env.REFRESH_SECRET, {
     expiresIn: '30d',
     //store this in the database as a refresh type
     jwtid: uuidv4(),
   });
-  return {access, refresh};
+  return {access, refresh, accessId};
 };
 
 const refresh = async (req, res) => {

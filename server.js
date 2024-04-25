@@ -2,8 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
-const {authTalent} = require('./src/middleware/authMiddleware');
 const cookieParser = require('cookie-parser');
+//Middleware
+const {authTalent, authAny} = require('./src/middleware/authMiddleware');
+
 //Security Stuff
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
@@ -41,7 +43,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 //use the db connection to check connection before starting the listener
-const db = new PostgresConnection(); // Create a single instance (singleton)
+const db = new PostgresConnection(); // Create an instance (singleton to control connections)
 
 (async () => {
   try {
@@ -50,6 +52,7 @@ const db = new PostgresConnection(); // Create a single instance (singleton)
     app.listen(PORT, () => {
       console.log('Listening on Port TCP: 7001');
     });
+    client.release();
   } catch (err) {
     console.error('Postgres DB Connection Failed: ', err);
     process.exit(1);
@@ -58,8 +61,9 @@ const db = new PostgresConnection(); // Create a single instance (singleton)
 
 //Add the main routers and links to sub-routers here
 app.use('/auth', authRouter);
-app.use('/api', apiRouter); //general enum lookups etc - no authentication on any
+app.use('/api/sec', authAny, apiRouter); //secured api routes for any user type
 app.use('/api/talent', authTalent, talentRouter); //users router - 1 level auth only
+app.use('/api', apiRouter); //general enum lookups etc - no authentication on any
 app.use('/api/recruiter', recruiterRouter);
 app.use('/api', (req, res) => res.status(404).json('No route for this path'));
 

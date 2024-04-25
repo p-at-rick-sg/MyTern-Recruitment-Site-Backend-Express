@@ -4,6 +4,7 @@ const {simpleGet} = require('../controllers/talentController');
 
 //GET
 router.get('/test', simpleGet);
+
 //POST
 
 //PATCH
