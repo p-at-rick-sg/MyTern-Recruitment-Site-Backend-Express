@@ -1,0 +1,893 @@
+{
+    textStyles: [],
+    pages: [
+      {
+        detectedLanguages: [Array],
+        blocks: [Array],
+        paragraphs: [Array],
+        lines: [Array],
+        tokens: [Array],
+        visualElements: [],
+        tables: [],
+        formFields: [],
+        symbols: [],
+        transforms: [],
+        detectedBarcodes: [],
+        pageNumber: 1,
+        dimension: [Object],
+        layout: [Object],
+        image: [Object],
+        provenance: null,
+        imageQualityScores: null
+      },
+      {
+        detectedLanguages: [Array],
+        blocks: [Array],
+        paragraphs: [Array],
+        lines: [Array],
+        tokens: [Array],
+        visualElements: [],
+        tables: [],
+        formFields: [],
+        symbols: [],
+        transforms: [],
+        detectedBarcodes: [],
+        pageNumber: 2,
+        dimension: [Object],
+        layout: [Object],
+        image: [Object],
+        provenance: null,
+        imageQualityScores: null
+      },
+      {
+        detectedLanguages: [Array],
+        blocks: [Array],
+        paragraphs: [Array],
+        lines: [Array],
+        tokens: [Array],
+        visualElements: [],
+        tables: [],
+        formFields: [],
+        symbols: [],
+        transforms: [],
+        detectedBarcodes: [],
+        pageNumber: 3,
+        dimension: [Object],
+        layout: [Object],
+        image: [Object],
+        provenance: null,
+        imageQualityScores: null
+      }
+    ],
+    entities: [
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'experience',
+        mentionText: "Kape Technologies (Formerly ExpressVPN) - Chief Information Officer 01/2020 - 01/2023 • Formulated and executed comprehensive technology strategy in line with organisation's strategic objectives . Established and managed diverse teams across Engineering, Operations, Projects, and IT Governance, fostering culture of independence and efficiency Led transition to cloud-first strategy, enhancing IT's alignment with overarching business goals and optimising support • Directed creation of Kape Technologies' inaugural IT budget and development of robust internal Security Operations Centre (SoC), significantly bolstering cybersecurity measures • Oversaw harmonious integration of Kape & ExpressVPN's core IT systems, ensuring timely and budget-conscious completion • Achieved substantial cost savings, reducing annual expenses by over US$1M on SaaS services and $2M in capital expenses through scalable, efficient platform solutions • Enhanced IT service productivity by 12% and achieved 70% reduction in unplanned service outages, reinforcing Change Management processes • Recruited and led global team of over 40 IT professionals, establishing 24/7 support operations with consistent 95% SLA compliance rate • Merged IT platforms for over 1000 users within year post-",
+        mentionId: '',
+        confidence: 0.2857142984867096,
+        pageAnchor: [Object],
+        id: '0',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'firstName',
+        mentionText: 'PATRICK',
+        mentionId: '',
+        confidence: 1,
+        pageAnchor: [Object],
+        id: '1',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'telephone',
+        mentionText: '+65 8042 4442',
+        mentionId: '',
+        confidence: 0.8571428656578064,
+        pageAnchor: [Object],
+        id: '2',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'summary',
+        mentionText: 'Accomplished professional with a proven track record in spearheading transformative IT strategies and achieving operational excellence. Adept in fostering technological innovation and business alignment, with focus on results-driven leadership and sustainable growth. Seasoned executive with over two decades of IT leadership, excelling in digital transformation, cybersecurity, and business continuity. Specialised in developing and executing IT strategies that align with organisational goals, underscored by strong governance and compliance. Renowned for building and mentoring high-performing teams, enhancing IT operations, and managing large-scale projects. Demonstrated unique blend of technical expertise and strategic acumen, ensuring effective resource allocation, cost management, and technological advancement.',
+        mentionId: '',
+        confidence: 0.8571428656578064,
+        pageAnchor: [Object],
+        id: '3',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'formalEducation',
+        mentionText: 'University of Salford Manchester, UK • 01/2019 Master of Science in Information Systems Management & Computer Science Informatics Singapore 01/2014 Higher National Diploma (HND) - Business Information Systems',
+        mentionId: '',
+        confidence: 0.4285714328289032,
+        pageAnchor: [Object],
+        id: '4',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'email',
+        mentionText: 'p@rick.sg',
+        mentionId: '',
+        confidence: 0.8571428656578064,
+        pageAnchor: [Object],
+        id: '5',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'skills',
+        mentionText: 'Strategic IT Leadership',
+        mentionId: '',
+        confidence: 0.5714285969734192,
+        pageAnchor: [Object],
+        id: '6',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'skills',
+        mentionText: 'Digital Transformation',
+        mentionId: '',
+        confidence: 0.5714285969734192,
+        pageAnchor: [Object],
+        id: '7',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'skills',
+        mentionText: 'Cybersecurity Implementation',
+        mentionId: '',
+        confidence: 0.5714285969734192,
+        pageAnchor: [Object],
+        id: '8',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'skills',
+        mentionText: 'Business Continuity',
+        mentionId: '',
+        confidence: 0.5714285969734192,
+        pageAnchor: [Object],
+        id: '9',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'skills',
+        mentionText: 'Team Building & Leadership',
+        mentionId: '',
+        confidence: 0.5714285969734192,
+        pageAnchor: [Object],
+        id: '10',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'skills',
+        mentionText: 'Budget Management & Cost Optimisation',
+        mentionId: '',
+        confidence: 0.5714285969734192,
+        pageAnchor: [Object],
+        id: '11',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'skills',
+        mentionText: 'Vendor & Partnership Management',
+        mentionId: '',
+        confidence: 0.5714285969734192,
+        pageAnchor: [Object],
+        id: '12',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'skills',
+        mentionText: 'IT Infrastructure Development',
+        mentionId: '',
+        confidence: 0.5714285969734192,
+        pageAnchor: [Object],
+        id: '13',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'skills',
+        mentionText: 'IT Governance & Compliance',
+        mentionId: '',
+        confidence: 0.5714285969734192,
+        pageAnchor: [Object],
+        id: '14',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'skills',
+        mentionText: 'Data Analytics & Business Intelligence',
+        mentionId: '',
+        confidence: 0.5714285969734192,
+        pageAnchor: [Object],
+        id: '15',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'skills',
+        mentionText: 'Cloud Computing Strategies',
+        mentionId: '',
+        confidence: 0.5714285969734192,
+        pageAnchor: [Object],
+        id: '16',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'skills',
+        mentionText: 'Change Management',
+        mentionId: '',
+        confidence: 0.5714285969734192,
+        pageAnchor: [Object],
+        id: '17',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'skills',
+        mentionText: 'IT Service Management | ITIL',
+        mentionId: '',
+        confidence: 0.5714285969734192,
+        pageAnchor: [Object],
+        id: '18',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'skills',
+        mentionText: 'Technology Innovation',
+        mentionId: '',
+        confidence: 0.5714285969734192,
+        pageAnchor: [Object],
+        id: '19',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'skills',
+        mentionText: 'Customer Experience',
+        mentionId: '',
+        confidence: 0.5714285969734192,
+        pageAnchor: [Object],
+        id: '20',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'skills',
+        mentionText: 'Process Improvement',
+        mentionId: '',
+        confidence: 0.5714285969734192,
+        pageAnchor: [Object],
+        id: '21',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'skills',
+        mentionText: 'Project Lifecycle Management',
+        mentionId: '',
+        confidence: 0.5714285969734192,
+        pageAnchor: [Object],
+        id: '22',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'skills',
+        mentionText: 'JavaScript | React | Express',
+        mentionId: '',
+        confidence: 0.5714285969734192,
+        pageAnchor: [Object],
+        id: '23',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'skills',
+        mentionText: 'Python',
+        mentionId: '',
+        confidence: 0.5714285969734192,
+        pageAnchor: [Object],
+        id: '24',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'lastName',
+        mentionText: 'KITTLE',
+        mentionId: '',
+        confidence: 1,
+        pageAnchor: [Object],
+        id: '25',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'webLinks',
+        mentionText: 'LinkedIn: https://www.linkedin.com/in/patrickkittle/ • GitHub: https://github.com/p-at-rick-sg',
+        mentionId: '',
+        confidence: 0.7142857313156128,
+        pageAnchor: [Object],
+        id: '26',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'accomplishments',
+        mentionText: "Established and managed diverse teams across Engineering, Operations, Projects, and IT Governance, fostering culture of independence and efficiency Led transition to cloud-first strategy, enhancing IT's alignment with overarching business goals and optimising support Directed creation of Kape Technologies' inaugural IT budget and development of robust internal Security Operations Centre (SoC), significantly bolstering cybersecurity measures Oversaw harmonious integration of Kape & ExpressVPN's core IT systems, ensuring timely and budget-conscious completion Achieved substantial cost savings, reducing annual expenses by over US$1M on SaaS services and $2M in capital expenses through scalable, efficient platform solutions Enhanced IT service productivity by 12% and achieved 70% reduction in unplanned service outages, reinforcing Change Management processes Recruited and led global team of over 40 IT professionals, establishing 24/7 support operations with consistent 95% SLA compliance rate Merged IT platforms for over 1000 users within year post-",
+        mentionId: '',
+        confidence: 0.1428571492433548,
+        pageAnchor: [Object],
+        id: '27',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'certifications',
+        mentionText: 'ISO 27001 Foundation',
+        mentionId: '',
+        confidence: 0.4285714328289032,
+        pageAnchor: [Object],
+        id: '28',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'certifications',
+        mentionText: 'ITIL Certified Practitioner',
+        mentionId: '',
+        confidence: 0.4285714328289032,
+        pageAnchor: [Object],
+        id: '29',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'certifications',
+        mentionText: 'ISO 27001 Lead Implementer',
+        mentionId: '',
+        confidence: 0.4285714328289032,
+        pageAnchor: [Object],
+        id: '30',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'certifications',
+        mentionText: 'Prince Il Practitioner (Certified Trainer)',
+        mentionId: '',
+        confidence: 0.4285714328289032,
+        pageAnchor: [Object],
+        id: '31',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'certifications',
+        mentionText: 'GDPR Practitioner',
+        mentionId: '',
+        confidence: 0.4285714328289032,
+        pageAnchor: [Object],
+        id: '32',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'certifications',
+        mentionText: 'MCSE & MCSA-Messaging',
+        mentionId: '',
+        confidence: 0.4285714328289032,
+        pageAnchor: [Object],
+        id: '33',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'certifications',
+        mentionText: 'Microsoft Azure AZ-900 Fundamenta',
+        mentionId: '',
+        confidence: 0.4285714328289032,
+        pageAnchor: [Object],
+        id: '34',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'skills',
+        mentionText: 'Networking',
+        mentionId: '',
+        confidence: 0.1666666716337204,
+        pageAnchor: [Object],
+        id: '35',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'certifications',
+        mentionText: 'CCNA & CCNP Routing & Switching',
+        mentionId: '',
+        confidence: 0.6666666865348816,
+        pageAnchor: [Object],
+        id: '36',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'certifications',
+        mentionText: 'Scrum Master | Agile Practitioner Professional',
+        mentionId: '',
+        confidence: 0.6666666865348816,
+        pageAnchor: [Object],
+        id: '37',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'certifications',
+        mentionText: 'CCSP Certified Cloud Solutions',
+        mentionId: '',
+        confidence: 0.6666666865348816,
+        pageAnchor: [Object],
+        id: '38',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'certifications',
+        mentionText: 'CISSP - Certified Information Systems Security Professional',
+        mentionId: '',
+        confidence: 0.6666666865348816,
+        pageAnchor: [Object],
+        id: '39',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'certifications',
+        mentionText: 'AWS Certified Solutions Architect',
+        mentionId: '',
+        confidence: 0.6666666865348816,
+        pageAnchor: [Object],
+        id: '40',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'certifications',
+        mentionText: 'Azure Solutions Architect',
+        mentionId: '',
+        confidence: 0.6666666865348816,
+        pageAnchor: [Object],
+        id: '41',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'certifications',
+        mentionText: 'Linux Professional (Ubuntu)',
+        mentionId: '',
+        confidence: 0.6666666865348816,
+        pageAnchor: [Object],
+        id: '42',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'experience',
+        mentionText: '• Revolutionized support processes through automation, leading to 25% reduction in incidents, and optimized onboarding, cutting lead time from 20 to 5 days. • Implemented ISO 27001, significantly bolstering IT risk management. Deployed five major business systems, each integrated with supportive processes for enhanced efficiency. • Minimised IT spending by 10% per user, improving service quality and satisfaction levels in parallel Nutanix - Regional IT Operations Director 01/2019 - 01/2020 • Oversaw IT operations across Asia-Pacific region, including managing global 24/7 support functions . Spearheaded improvements in IT operations, processes, and procedures within APAC, setting new standards later adopted company-wide • Led initiatives to enhance user experience and service delivery, resulting in significant improvements in Service Level Agreements (SLA) and Net Promoter Score (NPS) metrics • Conducted comprehensive restructuring of endpoint procurement and cost management, leading to substantial budget savings • Achieved 40% reduction in costs against budget through strategic endpoint procurement and cost management • Utilised data-driven approaches to decrease support response times by 25%, enhancing operational efficiency • Streamlined onboarding process, significantly reducing lead time from two weeks to five days and implementing a zero-touch remote joining experience Fostered and maintained relationships with several key vendors, enhancing collaboration and service quality • Led migration to global Apple Care Enterprise support model • Drove remote working initiative during Covid to enable all Nutanix APAC staff to work remotely within 48 hours. NPAC Holdings Ltd - Director of Information Systems / Head of IT 01/2014 - 01/2019 • Directed formulation and execution of annual IT operations budget totalling US$5M, ensuring alignment with organisational goals Provided strategic leadership for development and management of IT systems, processes, and governance • Spearheaded design and deployment of global IT infrastructure across 20 paper mills and offices, including two data centres, focusing on efficiency and cost-effectiveness • Realised annual savings of over $1M through strategic deployment of global IT infrastructure, significantly reducing operational costs • • Implemented high-availability SAP HANA on-premise infrastructure across all company locations, enhancing data management and operational efficiency Achieved annual cost savings of US$250K by strategically consolidating sales offices and optimising integration of APAC facilities Managed migration of 1,000 global users to new IT landscape and led deployment of SAP HANA to 15 global paper facilities,',
+        mentionId: '',
+        confidence: 0.1666666716337204,
+        pageAnchor: [Object],
+        id: '43',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'summary',
+        mentionText: 'Revolutionized support processes through automation, leading to 25% reduction in incidents, and optimized onboarding, cutting lead time from 20 to 5 days. • Minimised IT spending by 10% per user, improving service quality and satisfaction levels in parallel',
+        mentionId: '',
+        confidence: 0.1666666716337204,
+        pageAnchor: [Object],
+        id: '44',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      },
+      {
+        properties: [],
+        textAnchor: [Object],
+        type: 'experience',
+        mentionText: 'Volex PLC - Group IT Infrastructure Manager • • • • 01/2010 01/2014 Oversaw group-wide IT budget of approximately US$5M, strategically managing resources for optimal efficiency Led team of 20 IT professionals, ensuring robust management of IT landscape for over 2,000 users Spearheaded initiatives to improve team quality and efficiency, focusing on enhancing employee skills and capabilities Directed global IT transformation, replacing 15 local server deployments with two regional data centres Managed migration of 15 global manufacturing facilities to cutting-edge IT infrastructure, significantly improving operational capabilities Achieved 40% reduction in support costs, contributing to substantial savings for organisation Enhanced service availability by 20%, leading to increased operational efficiency and user satisfaction Improved customer satisfaction (CSAT) by 40 points, reflecting enhanced service quality and responsiveness Implemented cost-saving measures, reducing group travel expenses by 20% and power consumption of IT devices by over 25%.',
+        mentionId: '',
+        confidence: 0.1428571492433548,
+        pageAnchor: [Object],
+        id: '45',
+        normalizedValue: null,
+        provenance: null,
+        redacted: false
+      }
+    ],
+    entityRelations: [],
+    revisions: [],
+    textChanges: [],
+    mimeType: 'application/pdf',
+    text: 'PATRICK KITTLE\n' +
+      'E: p@rick.sg\n' +
+      'P: +65 8042 4442\n' +
+      'A: 509045\n' +
+      '| PROFESSIONAL SUMMARY\n' +
+      'Accomplished professional with a proven track record in\n' +
+      'spearheading transformative IT strategies and achieving operational\n' +
+      'excellence. Adept in fostering technological innovation and\n' +
+      'business alignment, with focus on results-driven leadership and\n' +
+      'sustainable growth. Seasoned executive with over two decades of IT\n' +
+      'leadership, excelling in digital transformation, cybersecurity, and\n' +
+      'business continuity. Specialised in developing and executing IT\n' +
+      'strategies that align with organisational goals, underscored by strong\n' +
+      'governance and compliance. Renowned for building and\n' +
+      'mentoring high-performing teams, enhancing IT operations, and\n' +
+      'managing large-scale projects. Demonstrated unique blend of\n' +
+      'technical expertise and strategic acumen, ensuring effective\n' +
+      'resource allocation, cost management, and technological\n' +
+      'advancement.\n' +
+      '| WEBSITES, PORTFOLIOS, PROFILES\n' +
+      'LinkedIn: https://www.linkedin.com/in/patrickkittle/\n' +
+      '•\n' +
+      'GitHub: https://github.com/p-at-rick-sg\n' +
+      '| SKILLS\n' +
+      '•\n' +
+      'Strategic IT Leadership\n' +
+      '•\n' +
+      'Digital Transformation\n' +
+      '•\n' +
+      'Cybersecurity Implementation\n' +
+      '•\n' +
+      'Business Continuity\n' +
+      '•\n' +
+      'Team Building & Leadership\n' +
+      '•\n' +
+      'Budget Management & Cost\n' +
+      '•\n' +
+      '.\n' +
+      'Optimisation\n' +
+      'Vendor & Partnership\n' +
+      'Management\n' +
+      'IT Infrastructure Development\n' +
+      '•\n' +
+      'IT Governance & Compliance\n' +
+      '•\n' +
+      'Data Analytics & Business\n' +
+      'Intelligence\n' +
+      '•\n' +
+      'Cloud Computing Strategies\n' +
+      '•\n' +
+      'Change Management\n' +
+      '•\n' +
+      'IT Service Management | ITIL\n' +
+      '•\n' +
+      'Technology Innovation\n' +
+      '•\n' +
+      'Customer Experience\n' +
+      '•\n' +
+      'Process Improvement\n' +
+      '•\n' +
+      '•\n' +
+      '•\n' +
+      'Project Lifecycle Management\n' +
+      'JavaScript | React | Express\n' +
+      'Python\n' +
+      '| WORK HISTORY\n' +
+      'Kape Technologies (Formerly ExpressVPN) - Chief Information Officer\n' +
+      '01/2020 - 01/2023\n' +
+      '• Formulated and executed comprehensive technology strategy in\n' +
+      "line with organisation's strategic objectives\n" +
+      '.\n' +
+      'Established and managed diverse teams across Engineering,\n' +
+      'Operations, Projects, and IT Governance, fostering culture of\n' +
+      'independence and efficiency\n' +
+      "Led transition to cloud-first strategy, enhancing IT's alignment with\n" +
+      'overarching business goals and optimising support\n' +
+      "• Directed creation of Kape Technologies' inaugural IT budget and\n" +
+      'development of robust internal Security Operations Centre (SoC),\n' +
+      'significantly bolstering cybersecurity measures\n' +
+      "• Oversaw harmonious integration of Kape & ExpressVPN's core IT\n" +
+      'systems, ensuring timely and budget-conscious completion\n' +
+      '• Achieved substantial cost savings, reducing annual expenses by\n' +
+      'over US$1M on SaaS services and $2M in capital expenses\n' +
+      'through scalable, efficient platform solutions\n' +
+      '• Enhanced IT service productivity by 12% and achieved 70%\n' +
+      'reduction in unplanned service outages, reinforcing Change\n' +
+      'Management processes\n' +
+      '• Recruited and led global team of over 40 IT professionals,\n' +
+      'establishing 24/7 support operations with consistent 95% SLA\n' +
+      'compliance rate\n' +
+      '• Merged IT platforms for over 1000 users within year post-\n' +
+      '| EDUCATION\n' +
+      'University of Salford\n' +
+      'Manchester, UK • 01/2019\n' +
+      'Master of Science in Information Systems\n' +
+      'Management & Computer Science\n' +
+      'Informatics\n' +
+      '•\n' +
+      'Singapore 01/2014\n' +
+      'Higher National Diploma (HND) -\n' +
+      'Business Information Systems\n' +
+      '| CERTIFICATIONS\n' +
+      '• ISO 27001 Foundation\n' +
+      '•\n' +
+      'ITIL Certified Practitioner\n' +
+      '•\n' +
+      'ISO 27001 Lead Implementer\n' +
+      '•\n' +
+      'Prince Il Practitioner (Certified\n' +
+      'Trainer)\n' +
+      '• GDPR Practitioner\n' +
+      '•\n' +
+      'MCSE & MCSA-Messaging\n' +
+      '•\n' +
+      'Microsoft Azure AZ-900\n' +
+      'Fundamentals | Azure AZ-700\n' +
+      'acquisition, maintaining minimal budget\n' +
+      '• Revolutionized support processes through automation, leading to\n' +
+      '25% reduction in incidents, and optimized onboarding, cutting\n' +
+      'lead time from 20 to 5 days.\n' +
+      '•\n' +
+      'Implemented ISO 27001, significantly bolstering IT risk\n' +
+      'management.\n' +
+      'Deployed five major business systems, each integrated with\n' +
+      'supportive processes for enhanced efficiency.\n' +
+      '• Minimised IT spending by 10% per user, improving service quality\n' +
+      'and satisfaction levels in parallel\n' +
+      'Nutanix - Regional IT Operations Director\n' +
+      '01/2019 - 01/2020\n' +
+      '•\n' +
+      'Oversaw IT operations across Asia-Pacific region, including\n' +
+      'managing global 24/7 support functions\n' +
+      '.\n' +
+      'Spearheaded improvements in IT operations, processes, and\n' +
+      'procedures within APAC, setting new standards later adopted\n' +
+      'company-wide\n' +
+      '• Led initiatives to enhance user experience and service delivery,\n' +
+      'resulting in significant improvements in Service Level Agreements\n' +
+      '(SLA) and Net Promoter Score (NPS) metrics\n' +
+      '• Conducted comprehensive restructuring of endpoint\n' +
+      'procurement and cost management, leading to substantial\n' +
+      'budget savings\n' +
+      '• Achieved 40% reduction in costs against budget through\n' +
+      'strategic endpoint procurement and cost management\n' +
+      '• Utilised data-driven approaches to decrease support response\n' +
+      'times by 25%, enhancing operational efficiency\n' +
+      '• Streamlined onboarding process, significantly reducing lead time\n' +
+      'from two weeks to five days and implementing a zero-touch\n' +
+      'remote joining experience\n' +
+      '• Fostered and maintained relationships with several key vendors,\n' +
+      'enhancing collaboration and service quality\n' +
+      '•\n' +
+      'Led migration to global Apple Care Enterprise support model\n' +
+      '• Drove remote working initiative during Covid to enable all Nutanix\n' +
+      'APAC staff to work remotely within 48 hours.\n' +
+      'NPAC Holdings Ltd - Director of Information Systems / Head of IT\n' +
+      '01/2014 - 01/2019\n' +
+      '• Directed formulation and execution of annual IT operations\n' +
+      'budget totalling US$5M, ensuring alignment with organisational\n' +
+      'goals\n' +
+      'Provided strategic leadership for development and management\n' +
+      'of IT systems, processes, and governance\n' +
+      '• Spearheaded design and deployment of global IT infrastructure\n' +
+      'across 20 paper mills and offices, including two data centres,\n' +
+      'focusing on efficiency and cost-effectiveness\n' +
+      '• Realised annual savings of over $1M through strategic\n' +
+      'deployment of global IT infrastructure, significantly reducing\n' +
+      'operational costs\n' +
+      '•\n' +
+      '•\n' +
+      'Implemented high-availability SAP HANA on-premise\n' +
+      'infrastructure across all company locations, enhancing data\n' +
+      'management and operational efficiency\n' +
+      'Achieved annual cost savings of US$250K by strategically\n' +
+      'consolidating sales offices and optimising integration of APAC\n' +
+      'facilities\n' +
+      'Managed migration of 1,000 global users to new IT landscape\n' +
+      'and led deployment of SAP HANA to 15 global paper facilities,\n' +
+      '•\n' +
+      'Networking\n' +
+      'CCNA & CCNP Routing &\n' +
+      'Switching\n' +
+      '.\n' +
+      'Scrum Master | Agile\n' +
+      '•\n' +
+      'Practitioner\n' +
+      'Professional\n' +
+      'CCSP Certified Cloud Solutions\n' +
+      '•\n' +
+      'CISSP - Certified Information\n' +
+      'Systems Security Professional\n' +
+      '•\n' +
+      'AWS Certified Solutions Architect\n' +
+      '• Azure Solutions Architect\n' +
+      '•\n' +
+      'Linux Professional (Ubuntu)\n' +
+      'demonstrating exceptional project leadership.\n' +
+      'Volex PLC - Group IT Infrastructure Manager\n' +
+      '01/2010 01/2014\n' +
+      '•\n' +
+      '•\n' +
+      'Oversaw group-wide IT budget of approximately US$5M,\n' +
+      'strategically managing resources for optimal efficiency\n' +
+      'Led team of 20 IT professionals, ensuring robust management of IT\n' +
+      'landscape for over 2,000 users\n' +
+      'Spearheaded initiatives to improve team quality and efficiency,\n' +
+      'focusing on enhancing employee skills and capabilities\n' +
+      'Directed global IT transformation, replacing 15 local server\n' +
+      'deployments with two regional data centres\n' +
+      '• Managed migration of 15 global manufacturing facilities to\n' +
+      'cutting-edge IT infrastructure, significantly improving operational\n' +
+      'capabilities\n' +
+      '•\n' +
+      'Achieved 40% reduction in support costs, contributing to\n' +
+      'substantial savings for organisation\n' +
+      'Enhanced service availability by 20%, leading to increased\n' +
+      'operational efficiency and user satisfaction\n' +
+      '• Improved customer satisfaction (CSAT) by 40 points, reflecting\n' +
+      '•\n' +
+      'enhanced service quality and responsiveness\n' +
+      'Implemented cost-saving measures, reducing group travel\n' +
+      'expenses by 20% and power consumption of IT devices by over\n' +
+      '25%.\n',
+    shardInfo: null,
+    error: null,
+    uri: '',
+    source: 'uri'
+  }

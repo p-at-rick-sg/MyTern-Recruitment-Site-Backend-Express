@@ -1,0 +1,150 @@
+{
+  "data": {
+    "profile": {
+      "basics": {
+        "first_name": "PATRICK",
+        "last_name": "KITTLE",
+        "gender": "male",
+        "emails": ["p@rick.sg"],
+        "urls": ["https://www.linkedin.com/in/patrickkittle/", "https://github.com/p-at-rick-sg"],
+        "phone_numbers": ["+65 8042 4442"],
+        "date_of_birth": {"year": null, "month": null, "day": null},
+        "address": "509045",
+        "total_experience_in_years": 20,
+        "profession": "Chief Information Officer",
+        "summary": "Accomplished professional with a proven track record in spearheading transformative IT strategies and achieving operational excellence. Adept in fostering technological innovation and business alignment, with focus on results-driven leadership and sustainable growth. Seasoned executive with over two decades of IT leadership, excelling in digital transformation, cybersecurity, and business continuity. Specialised in developing and executing IT strategies that align with organisational goals, underscored by strong governance and compliance. Renowned for building and mentoring high-performing teams, enhancing IT operations, and managing large-scale projects. Demonstrated unique blend of technical expertise and strategic acumen, ensuring effective resource allocation, cost management, and technological advancement.",
+        "skills": [
+          "Strategic IT Leadership",
+          "Digital Transformation",
+          "Cybersecurity Implementation",
+          "Business Continuity",
+          "Team Building & Leadership",
+          "Budget Management & Cost Optimization",
+          "IT Infrastructure Development",
+          "Vendor & Partnership Management",
+          "IT Governance & Compliance",
+          "Data Analytics & Business Intelligence",
+          "Cloud Computing Strategies",
+          "Change Management",
+          "IT Service Management | ITIL",
+          "Technology Innovation",
+          "Customer Experience",
+          "Process Improvement",
+          "Project Lifecycle Management",
+          "JavaScript",
+          "React",
+          "Express",
+          "Python"
+        ],
+        "has_driving_license": false
+      },
+      "languages": [],
+      "educations": [
+        {
+          "start_year": 2014,
+          "is_current": false,
+          "end_year": 2019,
+          "issuing_organization": "Informatics, Singapore",
+          "description": "Higher National Diploma (HND) – Business Information Systems"
+        },
+        {
+          "start_year": 2019,
+          "is_current": false,
+          "end_year": 2023,
+          "issuing_organization": "University of Salford, Manchester, UK",
+          "description": "Master of Science in Information Systems Management & Computer Science"
+        }
+      ],
+      "trainings_and_certifications": [
+        {"year": null, "issuing_organization": "", "description": "ITIL Certified Practitioner"},
+        {"year": null, "issuing_organization": "", "description": "ISO 27001 Foundation"},
+        {"year": null, "issuing_organization": "", "description": "ISO 27001 Lead Implementer"},
+        {
+          "year": null,
+          "issuing_organization": "",
+          "description": "Prince II Practitioner (Certified Trainer)"
+        },
+        {"year": null, "issuing_organization": "", "description": "GDPR Practitioner"},
+        {"year": null, "issuing_organization": "", "description": "MCSE & MCSA-Messaging"},
+        {
+          "year": null,
+          "issuing_organization": "",
+          "description": "Microsoft Azure AZ-900 Fundamentals | Azure AZ-700 Networking"
+        },
+        {
+          "year": null,
+          "issuing_organization": "",
+          "description": "CCNA & CCNP Routing & Switching"
+        },
+        {
+          "year": null,
+          "issuing_organization": "",
+          "description": "Scrum Master | Agile Practitioner"
+        },
+        {
+          "year": null,
+          "issuing_organization": "",
+          "description": "CCSP – Certified Cloud Solutions Professional"
+        },
+        {
+          "year": null,
+          "issuing_organization": "",
+          "description": "CISSP – Certified Information Systems Security Professional"
+        },
+        {
+          "year": null,
+          "issuing_organization": "",
+          "description": "AWS Certified Solutions Architect"
+        },
+        {"year": null, "issuing_organization": "", "description": "Azure Solutions Architect"},
+        {"year": null, "issuing_organization": "", "description": "Linux Professional (Ubuntu)"}
+      ],
+      "professional_experiences": [
+        {
+          "start_date": {"year": 2020, "month": 1},
+          "is_current": true,
+          "end_date": {"year": 2024, "month": 4},
+          "duration_in_months": 52,
+          "company": "Kape Technologies (Formerly ExpressVPN)",
+          "location": "",
+          "title": "Chief Information Officer",
+          "description": "Formulated and executed comprehensive technology strategy in line with organisation's strategic objectives\nEstablished and managed diverse teams across Engineering, Operations, Projects, and IT Governance, fostering culture of independence and efficiency\nLed transition to cloud-first strategy, enhancing IT's alignment with overarching business goals and optimising support\nDirected creation of Kape Technologies' inaugural IT budget and development of robust internal Security Operations Centre (SoC), significantly bolstering cybersecurity measures\nOversaw harmonious integration of Kape & ExpressVPN's core IT systems, ensuring timely and budget-conscious completion\nAchieved substantial cost savings, reducing annual expenses by over US$1M on SaaS services and $2M in capital expenses through scalable, efficient platform solutions\nEnhanced IT service productivity by 12% and achieved 70% reduction in unplanned service outages, reinforcing Change Management processes\nRecruited and led global team of over 40 IT professionals, establishing 24/7 support operations with consistent 95% SLA compliance rate\nMerged IT platforms for over 1000 users within year post-acquisition, maintaining minimal budget\nRevolutionized support processes through automation, leading to 25% reduction in incidents, and optimized onboarding, cutting lead time from 20 to 5 days\nImplemented ISO 27001, significantly bolstering IT risk management\nDeployed five major business systems, each integrated with supportive processes for enhanced efficiency\nMinimised IT spending by 10% per user, improving service quality and satisfaction levels in parallel"
+        },
+        {
+          "start_date": {"year": 2019, "month": 1},
+          "is_current": false,
+          "end_date": {"year": 2020, "month": 1},
+          "duration_in_months": 13,
+          "company": "Nutanix",
+          "location": "",
+          "title": "Regional IT Operations Director",
+          "description": "Oversaw IT operations across Asia-Pacific region, including managing global 24/7 support functions\nSpearheaded improvements in IT operations, processes, and procedures within APAC, setting new standards later adopted company-wide\nLed initiatives to enhance user experience and service delivery, resulting in significant improvements in Service Level Agreements (SLA) and Net Promoter Score (NPS) metrics\nConducted comprehensive restructuring of endpoint procurement and cost management, leading to substantial budget savings\nAchieved 40% reduction in costs against budget through strategic endpoint procurement and cost management\nUtilised data-driven approaches to decrease support response times by 25%, enhancing operational efficiency\nStreamlined onboarding process, significantly reducing lead time from two weeks to five days and implementing a zero-touch remote joining experience\nFostered and maintained relationships with several key vendors, enhancing collaboration and service quality\nLed migration to global Apple Care Enterprise support model\nDrove remote working initiative during Covid to enable all Nutanix APAC staff to work remotely within 48 hours"
+        },
+        {
+          "start_date": {"year": 2014, "month": 1},
+          "is_current": false,
+          "end_date": {"year": 2019, "month": 1},
+          "duration_in_months": 61,
+          "company": "NPAC Holdings Ltd",
+          "location": "",
+          "title": "Director of Information Systems / Head of IT",
+          "description": "Directed formulation and execution of annual IT operations budget totalling US$5M, ensuring alignment with organisational goals\nProvided strategic leadership for development and management of IT systems, processes, and governance\nSpearheaded design and deployment of global IT infrastructure across 20 paper mills and offices, including two data centres, focusing on efficiency and cost-effectiveness\nRealised annual savings of over $1M through strategic deployment of global IT infrastructure, significantly reducing operational costs\nImplemented high-availability SAP HANA on-premise infrastructure across all company locations, enhancing data management and operational efficiency\nAchieved annual cost savings of US$250K by strategically consolidating sales offices and optimising integration of APAC facilities\nManaged migration of 1,000 global users to new IT landscape and led deployment of SAP HANA to 15 global paper facilities, demonstrating exceptional project leadership"
+        },
+        {
+          "start_date": {"year": 2010, "month": 1},
+          "is_current": false,
+          "end_date": {"year": 2014, "month": 1},
+          "duration_in_months": 49,
+          "company": "Volex PLC",
+          "location": "",
+          "title": "Group IT Infrastructure Manager",
+          "description": "Oversaw group-wide IT budget of approximately US$5M, strategically managing resources for optimal efficiency\nLed team of 20 IT professionals, ensuring robust management of IT landscape for over 2,000 users\nSpearheaded initiatives to improve team quality and efficiency, focusing on enhancing employee skills and capabilities\nDirected global IT transformation, replacing 15 local server deployments with two regional data centres\nManaged migration of 15 global manufacturing facilities to cutting-edge IT infrastructure, significantly improving operational capabilities\nAchieved 40% reduction in support costs, contributing to substantial savings for organisation\nEnhanced service availability by 20%, leading to increased operational efficiency and user satisfaction\nImproved customer satisfaction (CSAT) by 40 points, reflecting enhanced service quality and responsiveness\nImplemented cost-saving measures, reducing group travel expenses by 20% and power consumption of IT devices by over 25%"
+        }
+      ],
+      "awards": [],
+      "references": []
+    },
+    "cv_text": "E: p@rick.sg P: +65 8042 4442 A: 509045\nPATRICK KITTLE\n❘ PROFESSIONAL SUMMARY\nAccomplished professional with a proven track record in spearheading transformative IT strategies and achieving operational excellence. Adept in fostering technological innovation and business alignment, with focus on results-driven leadership and sustainable growth. Seasoned executive with over two decades of IT leadership, excelling in digital transformation, cybersecurity, and business continuity. Specialised in developing and executing IT strategies that align with organisational goals, underscored by strong governance and compliance. Renowned for building and mentoring high-performing teams, enhancing IT operations, and managing large-scale projects. Demonstrated unique blend of technical expertise and strategic acumen, ensuring effective resource allocation, cost management, and technological advancement.\n❘ WEBSITES, PORTFOLIOS, PROFILES\n• LinkedIn: https://www.linkedin.com/in/patrickkittle/\n• GitHub: https://github.com/p-at-rick-sg\n❘ WORK HISTORY\nKape Technologies (Formerly ExpressVPN) - Chief Information Officer 01/2020 - 01/2023\n• Formulated and executed comprehensive technology strategy in line with organisation's strategic objectives\n• Established and managed diverse teams across Engineering, Operations, Projects, and IT Governance, fostering culture of independence and efficiency\n• Led transition to cloud-first strategy, enhancing IT's alignment with overarching business goals and optimising support\n• Directed creation of Kape Technologies' inaugural IT budget and development of robust internal Security Operations Centre (SoC), significantly bolstering cybersecurity measures\n• Oversaw harmonious integration of Kape & ExpressVPN's core IT systems, ensuring timely and budget-conscious completion\n• Achieved substantial cost savings, reducing annual expenses by over US$1M on SaaS services and $2M in capital expenses through scalable, efficient platform solutions\n• Enhanced IT service productivity by 12% and achieved 70% reduction in unplanned service outages, reinforcing Change Management processes\n• Recruited and led global team of over 40 IT professionals, establishing 24/7 support operations with consistent 95% SLA compliance rate\n• Merged IT platforms for over 1000 users within year post-\n❘ SKILLS\n• Strategic IT Leadership\n• Digital Transformation\n• Cybersecurity Implementation\n• Business Continuity\n• Team Building & Leadership\n• Budget Management & Cost Optimisation\n• IT Infrastructure Development\n• Vendor & Partnership Management\n• IT Governance & Compliance\n• Data Analytics & Business Intelligence\n• Cloud Computing Strategies\n• Change Management\n• IT Service Management | ITIL\n• Technology Innovation\n• Customer Experience\n• Process Improvement\n• Project Lifecycle Management\n• JavaScript | React | Express\n• Python\n❘\nEDUCATION\nUniversity of Salford Manchester, UK • 01/2019\nMaster of Science in Information Systems Management & Computer Science\nInformatics Singapore • 01/2014\nHigher National Diploma (HND) – Business Information Systems\n❘ CERTIFICATIONS\n• ITIL Certified Practitioner\n• ISO 27001 Foundation\n• ISO 27001 Lead Implementer\n• Prince II Practitioner (Certified Trainer)\n• GDPR Practitioner\n• MCSE & MCSA-Messaging\n• Microsoft Azure AZ-900\nFundamentals | Azure AZ-700\nacquisition, maintaining minimal budget\n• Revolutionized support processes through automation, leading to 25% reduction in incidents, and optimized onboarding, cutting lead time from 20 to 5 days.\n• Implemented ISO 27001, significantly bolstering IT risk management.\n• Deployed five major business systems, each integrated with supportive processes for enhanced efficiency.\n• Minimised IT spending by 10% per user, improving service quality and satisfaction levels in parallel\nNutanix - Regional IT Operations Director 01/2019 - 01/2020\n• Oversaw IT operations across Asia-Pacific region, including managing global 24/7 support functions\n• Spearheaded improvements in IT operations, processes, and procedures within APAC, setting new standards later adopted company-wide\n• Led initiatives to enhance user experience and service delivery, resulting in significant improvements in Service Level Agreements (SLA) and Net Promoter Score (NPS) metrics\n• Conducted comprehensive restructuring of endpoint procurement and cost management, leading to substantial budget savings\n• Achieved 40% reduction in costs against budget through strategic endpoint procurement and cost management\n• Utilised data-driven approaches to decrease support response times by 25%, enhancing operational efficiency\n• Streamlined onboarding process, significantly reducing lead time from two weeks to five days and implementing a zero-touch remote joining experience\n• Fostered and maintained relationships with several key vendors, enhancing collaboration and service quality\n• Led migration to global Apple Care Enterprise support model\n• Drove remote working initiative during Covid to enable all Nutanix APAC staff to work remotely within 48 hours.\nNPAC Holdings Ltd - Director of Information Systems / Head of IT 01/2014 - 01/2019\n• Directed formulation and execution of annual IT operations budget totalling US$5M, ensuring alignment with organisational goals\n• Provided strategic leadership for development and management of IT systems, processes, and governance\n• Spearheaded design and deployment of global IT infrastructure across 20 paper mills and offices, including two data centres, focusing on efficiency and cost-effectiveness\n• Realised annual savings of over $1M through strategic deployment of global IT infrastructure, significantly reducing operational costs\n• Implemented high-availability SAP HANA on-premise infrastructure across all company locations, enhancing data management and operational efficiency\n• Achieved annual cost savings of US$250K by strategically consolidating sales offices and optimising integration of APAC facilities\n• Managed migration of 1,000 global users to new IT landscape and led deployment of SAP HANA to 15 global paper facilities,\nNetworking\n• CCNA & CCNP Routing & Switching\n• Scrum Master | Agile\nPractitioner\n• CCSP – Certified Cloud Solutions Professional\n• CISSP – Certified Information Systems Security Professional\n• AWS Certified Solutions Architect\n• Azure Solutions Architect\n• Linux Professional (Ubuntu)\ndemonstrating exceptional project leadership.\nVolex PLC - Group IT Infrastructure Manager\n01/2010 - 01/2014\n• Oversaw group-wide IT budget of approximately US$5M,\nstrategically managing resources for optimal efficiency\n• Led team of 20 IT professionals, ensuring robust management of IT landscape for over 2,000 users\n• Spearheaded initiatives to improve team quality and efficiency,\nfocusing on enhancing employee skills and capabilities\n• Directed global IT transformation, replacing 15 local server deployments with two regional data centres\n• Managed migration of 15 global manufacturing facilities to cutting-edge IT infrastructure, significantly improving operational capabilities\n• Achieved 40% reduction in support costs, contributing to substantial savings for organisation\n• Enhanced service availability by 20%, leading to increased operational efficiency and user satisfaction\n• Improved customer satisfaction (CSAT) by 40 points, reflecting enhanced service quality and responsiveness\n• Implemented cost-saving measures, reducing group travel expenses by 20% and power consumption of IT devices by over 25%.",
+    "cv_language": "en"
+  }
+}
