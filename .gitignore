@@ -127,5 +127,5 @@ dist
 .pnp.*
 
 # Google
-ga-project-4-langchain.json
+resume-creds.json
 .pem
