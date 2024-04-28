@@ -50,7 +50,7 @@ const scanResume = async (req, res) => {
     return res.status(400).json({status: 'error', msg: 'failed to analyse resume'});
   }
 };
-
+//
 const scanResumeCVPP = async (req, res) => {
   console.log('CV PArser Resume Scanner Running');
   const fileName = req.params.fileName;
