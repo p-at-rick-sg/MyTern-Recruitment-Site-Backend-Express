@@ -211,7 +211,6 @@ const signout = async (req, res) => {
   email = req.body.email;
   if (!accessToken) {
     console.info('no access token for signout - checking body for email');
-    //do the cleanse based on email
     if (!email) {
       console.error('no email to signout - returning');
       return res.status(400).json({status: 'error', msg: 'no valid id to signout'});
