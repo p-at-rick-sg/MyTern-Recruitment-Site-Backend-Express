@@ -13,10 +13,9 @@ const simpleGet = (req, res) => {
 };
 
 const getUserBasic = async (req, res) => {
-  //TODO upate to use the userId from the authenticated request
+  const userId = req.decoded.id;
   const client = await db.pool.connect();
   try {
-    const userId = req.params.userId;
     const userQueryString = `SELECT summary, active FROM users WHERE id = $1`;
     const userParams = [userId];
     const userResult = await client.query(userQueryString, userParams);
@@ -27,9 +26,27 @@ const getUserBasic = async (req, res) => {
   }
 };
 
+const getSkills = async (req, res) => {
+  const userId = req.decoded.id;
+  const client = await db.pool.connect();
+  let skillsResult;
+  try {
+    const skillsQueryString = `SELECT skills.skill_id, skills.skill_name, user_skills_link.level, user_skills_link.experience FROM skills
+      INNER JOIN user_skills_link ON skills.skill_id = user_skills_link.skill_id
+      WHERE user_skills_link.user_id = $1;`;
+    const skillsParams = [userId];
+    skillsResult = await client.query(skillsQueryString, skillsParams);
+  } catch (err) {
+    return res.status(400).json({status: 'error', msg: 'failed to retrieve data'});
+  }
+  //clean the data and return
+  const cleansedResult = skillsResult.rows;
+  console.log('skills return: ', cleansedResult);
+  return res.status(200).json(cleansedResult);
+};
+
 const updateSkills = async (req, res) => {
-  console.log(req.body.length);
-  const userId = '7adf8371-9148-48c6-b7ad-090016faba21'; //upadte after testing
+  const userId = req.decoded.id;
   const client = await db.pool.connect();
   if (req.body.length !== 0) {
     try {
@@ -53,8 +70,7 @@ const updateSkills = async (req, res) => {
 };
 
 const deleteSkills = async (req, res) => {
-  console.log(req.body);
-  const userId = '7adf8371-9148-48c6-b7ad-090016faba21'; //upadte after testing
+  const userId = req.decoded.id;
   const client = await db.pool.connect();
   try {
     client.query('BEGIN;');
@@ -78,6 +94,47 @@ const deleteSkills = async (req, res) => {
   }
 };
 
+const updateBasic = async (req, res) => {
+  //basic is summary and active both in the main user object in db
+  const userId = req.decoded.id;
+  if ('summary' in req.body) {
+    const summary = req.body.summary;
+    const client = await db.pool.connect();
+    try {
+      client.query('BEGIN;');
+      summaryQueryStr = `UPDATE users
+      SET summary = $1
+      WHERE id = $2;`;
+      summaryParams = [summary, userId];
+      await client.query(summaryQueryStr, summaryParams);
+      client.query('COMMIT;');
+      return res.status(200).json({statud: 'ok', msg: 'updated professional summary'});
+    } catch (err) {
+      return res.status(400).json({status: 'error', msg: 'failed to update basic info'});
+    } finally {
+      client.release();
+    }
+  }
+  if ('active' in req.body) {
+    const active = req.body.active;
+    const client = await db.pool.connect();
+    try {
+      client.query('BEGIN;');
+      summaryQueryStr = `UPDATE users
+      SET active = $1
+      WHERE id = $2;`;
+      summaryParams = [active, userId];
+      await client.query(summaryQueryStr, summaryParams);
+      client.query('COMMIT;');
+      return res.status(200).json({statud: 'ok', msg: 'updated active status'});
+    } catch (err) {
+      return res.status(400).json({status: 'error', msg: 'failed to update active status'});
+    } finally {
+      client.release();
+    }
+  }
+};
+
 const getWorkHistory = async (req, res) => {
   return res.status(400);
 };
@@ -87,4 +144,6 @@ module.exports = {
   getUserBasic,
   updateSkills,
   deleteSkills,
+  getSkills,
+  updateBasic,
 };

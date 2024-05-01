@@ -40,6 +40,7 @@ const getCountries = async (req, res) => {
 const getPostcodes = async (req, res) => {};
 
 const whoAmI = async (req, res) => {
+  console.log('in the whoami function');
   console.log('we have token: ', req.decoded);
   if (validator.validate(req.decoded.email)) {
     const client = await db.pool.connect(); //keep outside the try as it cause all sorts of wierd stuff inside
@@ -69,34 +70,4 @@ const whoAmI = async (req, res) => {
   }
 };
 
-const getSkills = async (req, res) => {
-  console.info('get skills running');
-  const client = await db.pool.connect();
-  let skillsResult;
-  console.log(req.params);
-  if (req.params.userId !== undefined) {
-    const userId = req.params.userId;
-    try {
-      const skillsQueryString = `SELECT skills.skill_id, skills.skill_name, user_skills_link.level, user_skills_link.experience FROM skills
-      INNER JOIN user_skills_link ON skills.skill_id = user_skills_link.skill_id
-      WHERE user_skills_link.user_id = $1;`;
-      const skillsParams = [userId];
-      skillsResult = await client.query(skillsQueryString, skillsParams);
-    } catch (err) {
-      return res.status(400).json({status: 'error', msg: 'failed to retrieve data'});
-    }
-  } else {
-    console.log('the no userid section');
-    try {
-      const skillsQueryString = `SELECT skills.skill_id, skills.skill_name FROM skills`;
-      skillsResult = await client.query(skillsQueryString);
-    } catch (err) {
-      return res.status(400).json({status: 'error', msg: 'failed to retrieve data'});
-    }
-  }
-  //clean the data and return
-  const cleansedResult = skillsResult.rows;
-  return res.status(200).json(cleansedResult);
-};
-
-module.exports = {getSectors, getCountries, getPostcodes, getSkills, whoAmI};
+module.exports = {getSectors, getCountries, getPostcodes, whoAmI};
