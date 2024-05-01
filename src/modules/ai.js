@@ -83,7 +83,7 @@ const scanResumeCVPP = async (req, res) => {
     const dbResult = await writeResumeToDb(formatedResumeObj, userId);
     console.log('after the db function');
     //return the original formatted object to the client after all the db stuff
-    return res.status(200).json(formatedResumeObj);
+    return res.status(200).json({status: 'ok', msg: 'resume data added to db'});
   } catch (err) {
     console.error('Failed to scan resume with error: ', err);
     return res.status(400).json({status: 'error', msg: 'failed to pass to resume scanner API'});
@@ -104,7 +104,7 @@ const formatResumeData = async fileName => {
     const skillsArr = [];
     for (const skill of jsonData.data.profile.basics.skills) {
       const tmpSkillObj = {};
-      tmpSkillObj.name = skill;
+      tmpSkillObj.name = skill.toLowerCase();
       tmpSkillObj.level = 0;
       tmpSkillObj.yearsExp = 0;
       tmpSkillObj.validated = false;
@@ -114,8 +114,8 @@ const formatResumeData = async fileName => {
     const educationArr = [];
     for (const edu of jsonData.data.profile.educations) {
       const tmpEduObj = {};
-      tmpEduObj.qualification = edu.description;
-      tmpEduObj.institution = edu.issuing_organization;
+      tmpEduObj.qualification = edu.description.toLowerCase();
+      tmpEduObj.institution = edu.issuing_organization.toLowerCase();
       tmpEduObj.endYear = edu.end_year;
       educationArr.push(tmpEduObj);
     }
@@ -123,8 +123,8 @@ const formatResumeData = async fileName => {
     const experienceArr = [];
     for (const role of jsonData.data.profile.professional_experiences) {
       const tmpExpObj = {};
-      tmpExpObj.title = role.title;
-      tmpExpObj.company = role.company;
+      tmpExpObj.title = role.title.toLowerCase();
+      tmpExpObj.company = role.company.toLowerCase();
       tmpExpObj.startDate = role.start_date;
       tmpExpObj.endDate = role.end_date;
       tmpExpObj.details = role.description;
@@ -134,8 +134,8 @@ const formatResumeData = async fileName => {
     const trainingArr = [];
     for (const cert of jsonData.data.profile.trainings_and_certifications) {
       const tmpCertObj = {};
-      tmpCertObj.name = cert.description;
-      tmpCertObj.institution = cert.issuing_organization;
+      tmpCertObj.name = cert.description.toLowerCase();
+      tmpCertObj.institution = cert.issuing_organization.toLowerCase();
       tmpCertObj.year = cert.year;
       trainingArr.push(tmpCertObj);
     }

@@ -44,9 +44,7 @@ const signup = async (req, res) => {
       'INSERT INTO users (email, password_hash, first_name, last_name) VALUES ($1, $2, $3, $4) RETURNING id',
       [email, passwordHash, firstName, lastName]
     );
-    console.log(insertUserResult);
     if (insertUserResult.rows[0]) {
-      console.log('we have the user ID OK');
       const userId = insertUserResult.rows[0].id;
       //add the user type - default will be 1 - normal user
       const userTypeId = 1;
@@ -72,7 +70,6 @@ const signup = async (req, res) => {
           'INSERT INTO addresses (address1, address2, city, postcode, country_id) VALUES ($1, $2, $3, $4, $5) RETURNING id',
           [address1, address2 || '', city, postcode, countryId]
         );
-        console.log('address id: ', insertAddressResult.rows[0].id);
         const addressId = insertAddressResult.rows[0].id;
         await client.query(
           'INSERT INTO user_address_link (user_id, address_id, address_type) VALUES ($1, $2, $3)',
@@ -111,6 +108,8 @@ const checkExistingDomain = async params => {
     } else return true;
   } catch (err) {
     console.error('failed to validate domain');
+  } finally {
+    client.release();
   }
 };
 
@@ -206,52 +205,119 @@ const corpSignup = async (req, res) => {
   //invite the users added at the end
 };
 
+const signout = async (req, res) => {
+  //remove all access tokens and the session
+  const accessToken = req.cookies.accessToken;
+  email = req.body.email;
+  if (!accessToken) {
+    console.info('no access token for signout - checking body for email');
+    //do the cleanse based on email
+    if (!email) {
+      console.error('no email to signout - returning');
+      return res.status(400).json({status: 'error', msg: 'no valid id to signout'});
+    }
+  } else {
+    const client = await db.pool.connect();
+    try {
+      client.query('BEGIN;');
+      const decoded = jwt.verify(accessToken, process.env.ACCESS_SECRET);
+      const getSessionIdString = `SELECT id FROM sessions WHERE user_id = $1;`;
+      const getSessionIdParams = [decoded.id];
+      const sessionQueryResult = await client.query(getSessionIdString, getSessionIdParams);
+      const sessionId = sessionQueryResult?.rows[0].id;
+      //delete all access tokens form the id
+      const tmp = await client.query(`DELETE FROM access_tokens WHERE session_id = $1;`, [
+        sessionId,
+      ]);
+      //Delete the session too
+      const tmp2 = await client.query(`DELETE FROM sessions WHERE id = $1;`, [sessionId]);
+      client.query('COMMIT;');
+      return res.status(200).json({status: 'ok', msg: 'logged out all sessions from server'});
+    } catch (err) {
+      console.error('signout failed', err);
+      client.query('ROLLBACK;');
+      return res.status(200).json({status: 'error', msg: 'failed to sign out properly'});
+    }
+  }
+};
+
 const signin = async (req, res) => {
-  console.log(req.body);
   try {
     const email = req.body.email;
     const password = req.body.password;
-    // console.log(email, ' : ', password);
     const auth = await userLookup(email);
-    // console.log('auth in the signin func: ', auth);
     if (auth.rowCount === 0) {
       return res.status(400).json({
         status: 'error',
         msg: 'User not found',
       });
     }
-    console.log('auth _id: ', auth.rows[0].id);
     // Compare the password hash against the stored hash
     const result = await bcrypt.compare(password, auth.rows[0].password_hash);
     if (!result) {
       console.log('Incorrect password');
       return res.status(400).json({status: 'error', msg: 'Incorrect password'});
     }
+    //check if the user is corp and if so retrieve the role name or ID
+    const type = auth.rows[0].name;
+    const userId = auth.rows[0].id;
+    let roleName;
+    if (type === 'corp') {
+      try {
+        //now get the corp users role for the claims
+        const client = await db.pool.connect();
+        const roleQueryString = `SELECT roles.name
+      FROM roles
+      INNER JOIN company_users_link ON company_users_link.role_id = roles.id
+      WHERE user_id = $1;`;
+        const roleParams = [userId];
+        const roleResult = await client.query(roleQueryString, roleParams);
+        roleName = roleResult.rows[0].name;
+      } catch (err) {
+        console.error('failed to lookup corp users role');
+      }
+    }
     // Setup JWT
     const claims = {
       email: email,
-      type: auth.rows[0].name,
-      role: 'temp role for now', // TODO: add role here for comp/recr type
-      id: auth.rows[0].id,
+      type: type,
+      role: roleName || null, // TODO: add role here for comp/recr type
+      id: userId,
     };
+    console.log('claims: ', claims);
     const tokens = await setupJwt(claims);
     const client = await db.pool.connect(); // Use the connection pool
     try {
-      console.log('starting the db part ok');
       client.query('BEGIN;');
-      //create a new user session  TODO: do we wnat to check existing or delete when access expires?
+      //check if existing valid session then only create if none/expired
+      const checkSessionString = `SELECT * FROM sessions WHERE user_id = $1;`;
+      const checkSessionParams = [auth.rows[0].id];
+      const sessionResult = await client.query(checkSessionString, checkSessionParams);
+      if (sessionResult.rows.length !== 1) {
+        //delete all sessions as we cannot handle multiple session per device just yet
+        const deleteSessionString = `DELETE FROM sessions WHERE user_id = $1;`;
+        const deleteSessionParams = [auth.rows[0].id];
+        await client.query(deleteSessionString, deleteSessionParams);
+        console.log('deleted multi-sessions');
+      }
+      if (sessionResult.rows.length === 1) {
+        //check time validity
+        const expiry = sessionResult.rows[0].expires_at;
+        const nowZulu = Date.now();
+        // Get the milliseconds since the Unix epoch
+        const now = nowZulu.getTime();
+        console.log('expiry:', expiry);
+        console.log('now: ', now);
+      }
       const sessionInsert = await client.query(
         `INSERT INTO sessions (user_id) VALUES ($1) RETURNING id;`,
         [auth.rows[0].id]
       );
       const sessionId = sessionInsert.rows[0].id;
-      console.log('session id: ', sessionId); //this is good
-      console.log('access: ', tokens.accessId);
       const accessInsert = await client.query(
         `INSERT INTO access_tokens (jti, session_id) VALUES ($1, $2) RETURNING id ;`,
         [tokens.accessId, sessionId]
       );
-      console.info('committing the session db info');
       client.query('COMMIT;');
     } catch {
       client.query('ROLLBACK;');
@@ -264,7 +330,7 @@ const signin = async (req, res) => {
     res.cookie('accessToken', tokens.access, {
       domain: 'localhost',
       httpOnly: true,
-      secure: false, // Change to true in production if served over HTTPS
+      secure: false, // Change to true in production as will be served over HTTPS
       maxAge: 1000 * 60 * 30,
       sameSite: 'Lax',
     });
@@ -301,16 +367,16 @@ const userLookup = async email => {
 const setupJwt = async claims => {
   const accessId = uuidv4();
   const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
-    expiresIn: '7d',
+    expiresIn: '60m',
     //store this in the database as an access type
     jwtid: accessId,
   });
-  const refresh = jwt.sign(claims, process.env.REFRESH_SECRET, {
-    expiresIn: '30d',
-    //store this in the database as a refresh type
-    jwtid: uuidv4(),
-  });
-  return {access, refresh, accessId};
+  // const refresh = jwt.sign(claims, process.env.REFRESH_SECRET, {
+  //   expiresIn: '30d',
+  //   //store this in the database as a refresh type
+  //   jwtid: uuidv4(),
+  // });
+  return {access, accessId};
 };
 
 const refresh = async (req, res) => {
@@ -331,4 +397,13 @@ const refresh = async (req, res) => {
   }
 };
 
-module.exports = {signup, signin, refresh, setupJwt, userLookup, corpSignup, checkExistingEmail};
+module.exports = {
+  signup,
+  signin,
+  signout,
+  refresh,
+  setupJwt,
+  userLookup,
+  corpSignup,
+  checkExistingEmail,
+};

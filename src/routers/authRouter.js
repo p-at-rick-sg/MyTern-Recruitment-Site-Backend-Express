@@ -3,7 +3,7 @@ const router = express.Router();
 
 const auth = require('../middleware/authMiddleware');
 
-const {signup, signin, refresh, corpSignup} = require('../controllers/authController');
+const {signup, signin, refresh, corpSignup, signout} = require('../controllers/authController');
 const {postGoogleAuthURL, getGoogleUserData} = require('../controllers/googleController');
 
 //GET
@@ -15,8 +15,8 @@ router.put('/company-signup', corpSignup);
 //Signin Endpoint
 router.post('/signin', signin);
 
-//refresh Endpoint
-router.post('/refresh', refresh);
+//signout Endpoint
+router.post('/signout', signout);
 
 //GOOGLE STUFF
 //Post from the clien to get the google auth url which we return to the client

@@ -33,7 +33,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: ['http://localhost:5173', 'http://127.0.0.1:5731'],
-    methods: 'GET,POST,PUT,DELETE',
+    methods: 'GET,POST,PUT,DELETE,PATCH',
     credentials: true,
   })
 );
@@ -61,10 +61,10 @@ const db = new PostgresConnection(); // Create an instance (singleton to control
 
 //Add the main routers and links to sub-routers here
 app.use('/auth', authRouter);
-app.use('/api/sec', authAny, apiRouter); //secured api routes for any user type
-app.use('/api/talent', talentRouter); //users router - 1 level auth only = REOVED FOR FILE TESTING (authTalent, )
-app.use('/api', apiRouter); //general enum lookups etc - no authentication on any
+app.use('/api/sec', authAny, apiRouter); //secured api routes for any user type (authAny)
+app.use('/api/talent', authTalent, talentRouter); //users router - 1 level auth only = REOVED FOR FILE TESTING (authTalent
 app.use('/api/recruiter', recruiterRouter);
-app.use('/api', (req, res) => res.status(404).json('No route for this path'));
+app.use('/api', apiRouter); //general enum lookups etc - no authentication on any
+app.use('/', (req, res) => res.status(404).json('No route for this path'));
 
 module.exports = {db};
