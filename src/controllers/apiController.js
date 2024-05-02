@@ -17,6 +17,8 @@ const getSectors = async (req, res) => {
     return res.status(200).json(sectorsResult.rows);
   } catch (err) {
     return res.status(400).json({status: 'error', msg: 'failed to retrieve data'});
+  } finally {
+    client.release();
   }
 };
 
@@ -34,10 +36,32 @@ const getCountries = async (req, res) => {
     return res.status(200).json(countriesResult.rows);
   } catch (err) {
     return res.status(400).json({status: 'error', msg: 'failed to retrieve data'});
+  } finally {
+    client.release();
   }
 };
 
 const getPostcodes = async (req, res) => {};
+
+const getSkills = async (req, res) => {
+  console.log('staritng full skills enum func');
+  const client = await db.pool.connect();
+  try {
+    console.log('in the try');
+    const skillsResult = await client.query(
+      'SELECT skill_id, skill_name FROM skills ORDER BY skill_name;'
+    );
+    const cleansedResult = skillsResult.rows;
+    console.log(cleansedResult);
+    console.log('have result');
+    return res.status(200).json(cleansedResult);
+  } catch (err) {
+    console.error('Error fetching skills with error: ', err);
+    return res.status(400).json({status: 'error', msg: 'failed to retrieve data'});
+  } finally {
+    client.release();
+  }
+};
 
 const whoAmI = async (req, res) => {
   console.log('in the whoami function');
@@ -70,4 +94,4 @@ const whoAmI = async (req, res) => {
   }
 };
 
-module.exports = {getSectors, getCountries, getPostcodes, whoAmI};
+module.exports = {getSectors, getCountries, getPostcodes, getSkills, whoAmI};

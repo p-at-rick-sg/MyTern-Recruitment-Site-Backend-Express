@@ -19,10 +19,11 @@ const getUserBasic = async (req, res) => {
     const userQueryString = `SELECT summary, active FROM users WHERE id = $1`;
     const userParams = [userId];
     const userResult = await client.query(userQueryString, userParams);
-    console.log(userResult);
     return res.status(200).json(userResult.rows[0]);
   } catch (err) {
     return res.status(400).json({status: 'error', msg: 'failed to retrieve data'});
+  } finally {
+    client.release();
   }
 };
 
@@ -38,10 +39,11 @@ const getSkills = async (req, res) => {
     skillsResult = await client.query(skillsQueryString, skillsParams);
   } catch (err) {
     return res.status(400).json({status: 'error', msg: 'failed to retrieve data'});
+  } finally {
+    client.release();
   }
   //clean the data and return
   const cleansedResult = skillsResult.rows;
-  console.log('skills return: ', cleansedResult);
   return res.status(200).json(cleansedResult);
 };
 
@@ -65,7 +67,31 @@ const updateSkills = async (req, res) => {
       console.error('failed to delete skill from user', err);
       client.query('ROLLBACK;');
       return res.status(400).json({status: 'error', msg: 'failed to delete users skill'});
+    } finally {
+      client.release();
     }
+  }
+};
+
+const addSkill = async (req, res) => {
+  const userId = req.decoded.id;
+  const skillId = req.body.skillId;
+  const level = req.body.level;
+  const yearsExp = req.body.yearsExp;
+  const client = await db.pool.connect();
+  try {
+    client.query('BEGIN;');
+    const addQueryStr = `INSERT INTO user_skills_link (user_id, skill_id, level, experience) VALUES ($1, $2, $3, $4);`;
+    const addParams = [userId, skillId, level, yearsExp];
+    client.query(addQueryStr, addParams);
+    client.query('COMMIT;');
+    return res.status(200).json({status: 'ok', msg: 'added skill to user'});
+  } catch (err) {
+    console.error('failed to delete skill from user', err);
+    client.query('ROLLBACK;');
+    return res.status(400).json({status: 'error', msg: 'failed to add skill to user'});
+  } finally {
+    client.release();
   }
 };
 
@@ -95,7 +121,6 @@ const deleteSkills = async (req, res) => {
 };
 
 const updateBasic = async (req, res) => {
-  //basic is summary and active both in the main user object in db
   const userId = req.decoded.id;
   if ('summary' in req.body) {
     const summary = req.body.summary;
@@ -146,4 +171,5 @@ module.exports = {
   deleteSkills,
   getSkills,
   updateBasic,
+  addSkill,
 };

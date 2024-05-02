@@ -9,7 +9,6 @@ const checktokenDb = async userId => {
     const sessionResult = await client.query(`SELECT id FROM sessions WHERE user_id = $1;`, [
       userId,
     ]);
-    console.log('session result: ', sessionResult);
     if (sessionResult.rows.length === 0) {
       return false;
     } else {
@@ -30,7 +29,6 @@ const checktokenDb = async userId => {
 
 const authAny = async (req, res, next) => {
   const accessToken = req.cookies.accessToken;
-  console.log('authany middleware running: token: ', accessToken);
   if (!accessToken) {
     return res.status(401).json({
       status: 'error',
@@ -38,7 +36,6 @@ const authAny = async (req, res, next) => {
     });
   }
   try {
-    const client = await db.pool.connect();
     const decoded = jwt.verify(accessToken, process.env.ACCESS_SECRET);
     // first check the access-tokens db
     const userId = decoded.id;
@@ -50,7 +47,6 @@ const authAny = async (req, res, next) => {
     var d = new Date();
     var seconds = Math.round(d.getTime() / 1000);
     const remainingSeconds = decoded.exp - seconds;
-    console.log('Remaining Seconds', remainingSeconds);
     if (remainingSeconds >= 120) {
       console.log('valid token & expiry');
       req.decoded = decoded;
@@ -69,7 +65,6 @@ const authAny = async (req, res, next) => {
 
 const authTalent = async (req, res, next) => {
   const accessToken = req.cookies.accessToken;
-  console.log('Cookie Access Token is: ', accessToken);
   if (!accessToken) {
     return res.status(401).json({
       status: 'error',
@@ -78,18 +73,14 @@ const authTalent = async (req, res, next) => {
   }
   try {
     const decoded = jwt.verify(accessToken, process.env.ACCESS_SECRET);
-    console.log('Decoded Token: ', decoded);
     const userId = decoded.id;
     const validToken = await checktokenDb(userId);
-    console.log('token db result:', validToken);
     if (!validToken) {
       //reject the request
       console.info('token not in db');
       return res.status(401).json({status: 'error', msg: 'token not in db'});
     }
     if (decoded.type === 'user') {
-      //now check the session database in case it's blacklisted
-
       req.decoded = decoded;
       next();
     } else {
@@ -118,7 +109,6 @@ const authCorpUser = async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.ACCESS_SECRET);
       const userId = decoded.id;
       const validToken = await checktokenDb(userId);
-      console.log('token db result:', validToken);
       if (!validToken) {
         //reject the request
         console.info('token not in db');

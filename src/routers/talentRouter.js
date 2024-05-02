@@ -7,6 +7,7 @@ const {
   deleteSkills,
   getSkills,
   updateBasic,
+  addSkill,
 } = require('../controllers/talentController');
 const {upload} = require('../middleware/filesMiddleware'); //for the file upload middleware
 const {uploadAsset, downloadAssetFromGCP} = require('../modules/uploads'); // all file handling modules
@@ -23,6 +24,7 @@ router.get('/skills', getSkills);
 router.post('/upload', upload.single('resume'), uploadAsset);
 router.post('/format', formatResumeData);
 router.post('/ai-scan', scanResumeCVPP); //this is the correct ai call to parse the uploaded resume
+router.post('/add-skill', addSkill);
 
 //PATCH
 router.patch('/update-skills', updateSkills);

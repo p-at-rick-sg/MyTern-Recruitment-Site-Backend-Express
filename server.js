@@ -1,9 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const https = require('https');
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
-//Middleware
 const {authTalent, authAny} = require('./src/middleware/authMiddleware');
 
 //Security Stuff
@@ -23,7 +21,7 @@ const apiRouter = require('./src/routers/apiRouter');
 //Set rate limiter up
 const limiter = rateLimit({
   windowsMs: 15 * 60 * 1000, //period in ms - 15 mins
-  max: 100, //each ip limited to 100 req per window above
+  max: 1000, //each ip limited to 100 req per window above
   standardHeaders: true, //sends back this header
   legacyHeaders: false, //disables x-regulate
 });
@@ -62,7 +60,7 @@ const db = new PostgresConnection(); // Create an instance (singleton to control
 //Add the main routers and links to sub-routers here
 app.use('/auth', authRouter);
 app.use('/api/sec', authAny, apiRouter); //secured api routes for any user type (authAny)
-app.use('/api/talent', authTalent, talentRouter); //users router - 1 level auth only = REOVED FOR FILE TESTING (authTalent
+app.use('/api/talent', authTalent, talentRouter);
 app.use('/api/recruiter', recruiterRouter);
 app.use('/api', apiRouter); //general enum lookups etc - no authentication on any
 app.use('/', (req, res) => res.status(404).json('No route for this path'));
