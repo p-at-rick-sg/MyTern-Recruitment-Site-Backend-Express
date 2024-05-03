@@ -283,14 +283,16 @@ const signin = async (req, res) => {
     };
     console.log('claims: ', claims);
     const tokens = await setupJwt(claims);
-    const client = await db.pool.connect(); // Use the connection pool
+    const client = await db.pool.connect();
     try {
+      console.log('starting the db part');
       client.query('BEGIN;');
       //check if existing valid session then only create if none/expired
       const checkSessionString = `SELECT * FROM sessions WHERE user_id = $1;`;
       const checkSessionParams = [auth.rows[0].id];
       const sessionResult = await client.query(checkSessionString, checkSessionParams);
       if (sessionResult.rows.length !== 1) {
+        console.log('there is not exactly 1 session so we are clearing them down');
         //delete all sessions as we cannot handle multiple session per device just yet
         const deleteSessionString = `DELETE FROM sessions WHERE user_id = $1;`;
         const deleteSessionParams = [auth.rows[0].id];
@@ -306,16 +308,20 @@ const signin = async (req, res) => {
         console.log('expiry:', expiry);
         console.log('now: ', now);
       }
+      console.log('go to the session insert part ok');
       const sessionInsert = await client.query(
         `INSERT INTO sessions (user_id) VALUES ($1) RETURNING id;`,
         [auth.rows[0].id]
       );
       const sessionId = sessionInsert.rows[0].id;
+      console.log('session id in DB is: ', sessionId);
       const accessInsert = await client.query(
         `INSERT INTO access_tokens (jti, session_id) VALUES ($1, $2) RETURNING id ;`,
         [tokens.accessId, sessionId]
       );
+      console.log('accessId in DB is: ', accessInsert);
       client.query('COMMIT;');
+      console.log('committing access/sesison to the db ok');
     } catch {
       client.query('ROLLBACK;');
     } finally {
@@ -356,7 +362,7 @@ const userLookup = async email => {
     console.error('failed user lookup');
     return {status: 'error', message: 'failed user lookup'};
   } finally {
-    console.info('processed login ok - closing db session');
+    console.info('processed user lookup ok, closing session');
     client.release();
   }
 };
