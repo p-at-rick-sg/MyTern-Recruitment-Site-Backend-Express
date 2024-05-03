@@ -55,6 +55,9 @@ Company user can sign up in the comapy signup page for the main company account 
 
 A job seeker type user can signup ad also loginn using username/password. If they use a gmail email ID they also have the option to login with google. This also checks that they are using a validated email in google - if not then they are rejected and would nedd to revert to username/password login.
 
+## SQL Create Scripts
+A SQL Build file/dump: https://github.com/p-at-rick-sg/ga4-BE-NEW/blob/master/sql-dump.sql
+
 ## Icebox Items
 Icebox itemsare in the Jira project here: https://patrickkittle.atlassian.net/jira/software/projects/GP4/boards/4
 
