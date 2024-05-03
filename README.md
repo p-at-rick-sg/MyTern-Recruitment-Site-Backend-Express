@@ -59,9 +59,9 @@ A job seeker type user can signup ad also loginn using username/password. If the
 Icebox itemsare in the Jira project here: https://patrickkittle.atlassian.net/jira/software/projects/GP4/boards/4
 
 ## References
-- [API Dictionary](https://docs.google.com/spreadsheets/d/1wfkbw6tjOfWev1ZcPoxbaVDZ3InfBr3GgQTUlA75zVo/edit#gid=833770197)   
+- Wireframes ()
+- [API Dictionary](https://docs.google.com/spreadsheets/d/1-1C4dwu0u8UdyS8bFdTsCXUZ12Le0A2fmYiHbFyU4Js/edit?usp=sharing)   
 - [Material UI](https://mui.com/material-ui/getting-started/)
 - [Tailwind CSS](https://tailwindcss.com/docs/installation)
 - [Stripe](https://docs.stripe.com/)
 - [date-fns](https://date-fns.org/v3.6.0/docs/format)
-- [recharts](https://recharts.org/en-US/)
