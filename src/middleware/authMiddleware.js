@@ -65,6 +65,7 @@ const authAny = async (req, res, next) => {
 
 const authTalent = async (req, res, next) => {
   const accessToken = req.cookies.accessToken;
+  console.log(accessToken);
   if (!accessToken) {
     return res.status(401).json({
       status: 'error',

@@ -35,8 +35,8 @@ const signup = async (req, res) => {
   //Create the password hash
   const passwordHash = await bcrypt.hash(req.body.password, 12);
   //TODO: cleanse the input data in middlewarwe later
-  firstName = req.body.firstName;
-  lastName = req.body.lastName;
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
   const client = await db.pool.connect();
   try {
     client.query('BEGIN;');
@@ -64,7 +64,7 @@ const signup = async (req, res) => {
         const address1 = req.body.address1;
         const city = req.body.city;
         countryId = req.body.country.id;
-        const address2 = '';
+        let address2 = '';
         if ('address2' in req.body) address2 = req.body.address2;
         const insertAddressResult = await client.query(
           'INSERT INTO addresses (address1, address2, city, postcode, country_id) VALUES ($1, $2, $3, $4, $5) RETURNING id',
@@ -80,8 +80,6 @@ const signup = async (req, res) => {
         console.log('address already existed - add some logic to handle!');
         return res.status(400).json({status: 'error', msg: 'email already exists'});
       }
-      // if ('telephone' in req.body) newUser.telephone = req.body.telephone;
-      // if ('role' in req.body) newUser.role = req.body.role;
       res.status(200).json({status: 'ok', msg: 'user registered successfully'});
       client.query('COMMIT;');
     }
@@ -95,8 +93,8 @@ const signup = async (req, res) => {
 };
 
 const checkExistingDomain = async params => {
+  const client = await db.pool.connect();
   try {
-    const client = await db.pool.connect();
     const queryString = `
     SELECT id 
     FROM companies

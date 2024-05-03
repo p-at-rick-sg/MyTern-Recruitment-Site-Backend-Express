@@ -13,7 +13,7 @@ const {uploadAsset, inviteCompanyUser} = require('../controllers/recruiterContro
 //PUT
 router.put('/add-user', inviteCompanyUser);
 //POST
-router.post('recruiter/uploadAsset/:projectID', upload.single('image'), uploadAsset);
+router.post('/add-role');
 
 //PATCH
 

@@ -74,7 +74,6 @@ function generatePassword(length) {
 }
 
 const inviteCompanyUser = async (req, res) => {
-  //change doma later t be looked up locally?
   const user = req.body.user;
   const domain = req.body.domain;
   //check existing user and correct domain
@@ -109,7 +108,10 @@ const inviteCompanyUser = async (req, res) => {
   }
 };
 
+const addRole = async () => {};
+
 module.exports = {
   uploadAsset,
   inviteCompanyUser,
+  addRole,
 };

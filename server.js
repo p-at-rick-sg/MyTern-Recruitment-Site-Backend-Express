@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
-const {authTalent, authAny} = require('./src/middleware/authMiddleware');
+const {authTalent, authAny, authCorpUser} = require('./src/middleware/authMiddleware');
 
 //Security Stuff
 const helmet = require('helmet');
@@ -61,7 +61,7 @@ const db = new PostgresConnection(); // Create an instance (singleton to control
 app.use('/auth', authRouter);
 app.use('/api/sec', authAny, apiRouter); //secured api routes for any user type (authAny)
 app.use('/api/talent', authTalent, talentRouter);
-app.use('/api/recruiter', recruiterRouter);
+app.use('/api/recruiter', authCorpUser, recruiterRouter);
 app.use('/api', apiRouter); //general enum lookups etc - no authentication on any
 app.use('/', (req, res) => res.status(404).json('No route for this path'));
 
